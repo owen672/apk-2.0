@@ -91,6 +91,8 @@
     .hidden{display:none !important}
   </style>
 </head>
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#FFD700">
 <body>
   <div class="app" id="app">
     <header>
@@ -489,4 +491,11 @@
     seed(); wire(); renderNews(); if(isLogged()) postLogin();
   </script>
 </body>
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/service-worker.js')
+      .then(() => console.log('Service Worker registrado'))
+      .catch((error) => console.log('Error al registrar Service Worker', error));
+  }
+</script>
 </html>
