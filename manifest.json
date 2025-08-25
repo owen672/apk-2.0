@@ -1,11 +1,16 @@
 {
-  "name": "Patinaje LAT App",
+  "name": "Patinaje App",
   "short_name": "Patinaje",
+  "id": "/?source=pwa",
+  "description": "Aplicación PWA de Patinaje Bogotá para consultas y eventos.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#0b0b0c",
   "theme_color": "#FFD700",
   "orientation": "portrait",
+  "launch_handler": {
+    "client_mode": ["navigate-existing"]
+  },
   "icons": [
     {
       "src": "/icons/icon-192.png",
@@ -15,6 +20,13 @@
     {
       "src": "/icons/icon-512.png",
       "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshots/home.png",
+      "sizes": "540x720",
       "type": "image/png"
     }
   ]
