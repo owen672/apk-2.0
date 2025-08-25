@@ -1,526 +1,400 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Patinaje App Móvil</title>
-  <meta name="theme-color" content="#0b0b0c" />
-  <style>
-    :root{
-      --bg:#0b0b0c;           /* negro profundo */
-      --card:#121315;         /* tarjetas */
-      --muted:#8d8f98;        
-      --primary:#ffd100;      /* amarillo patín */
-      --primary-ink:#191919;  
-      --success:#22c55e;      /* verde */
-      --danger:#ef4444;       /* rojo */
-      --stroke:#232428;       /* bordes */
-      --shadow: 0 10px 30px rgba(0,0,0,.35);
-      --radius:16px;
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif;
-      background: radial-gradient(1200px 800px at 50% -200px, #1a1b1f 0%, var(--bg) 40%), var(--bg);
-      color:#f5f7fb;
-    }
-    .app{
-      min-height:100dvh; max-width:820px; margin:0 auto; display:flex; flex-direction:column;
-    }
-    header{
-      position:sticky; top:0; z-index:40;
-      display:flex; align-items:center; gap:.85rem; padding:14px 16px; background:rgba(10,10,11,.85);
-      backdrop-filter: blur(8px); border-bottom:1px solid var(--stroke);
-    }
-    .logo{width:34px; height:34px; border-radius:12px; background:linear-gradient(135deg, var(--primary), #ffe873); color:#111; display:grid; place-items:center; font-weight:900}
-    .title{font-weight:800; letter-spacing:.2px}
-    .title small{display:block; color:var(--muted); font-weight:600; margin-top:-2px}
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Patinaje App Móvil</title>
+<meta name="theme-color" content="#0b0b0c" />
+<style>
+:root{
+  --bg:#0b0b0c;
+  --card:#121315;
+  --muted:#8d8f98;
+  --primary:#22c55e;
+  --primary-ink:#191919;
+  --success:#22c55e;
+  --danger:#ef4444;
+  --stroke:#232428;
+  --shadow:0 10px 30px rgba(0,0,0,.35);
+  --radius:16px;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;font-family:system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif;
+  background:radial-gradient(1200px 800px at 50% -200px,#1a1b1f 0%,var(--bg) 40%), var(--bg);
+  color:#f5f7fb;
+}
+.app{min-height:100dvh; max-width:820px; margin:0 auto; display:flex; flex-direction:column;}
+header{
+  position:sticky; top:0; z-index:40;
+  display:flex; align-items:center; gap:.85rem; padding:14px 16px; background:rgba(10,10,11,.85);
+  backdrop-filter: blur(8px); border-bottom:1px solid var(--stroke);
+}
+.logo{width:34px; height:34px; border-radius:12px; background:linear-gradient(135deg, var(--primary), #76e29f); color:#111; display:grid; place-items:center; font-weight:900}
+.title{font-weight:800; letter-spacing:.2px}
+.title small{display:block; color:var(--muted); font-weight:600; margin-top:-2px}
 
-    .screen{padding:16px; display:none;}
-    .screen.active{display:block}
+.screen{padding:16px; display:none;}
+.screen.active{display:block}
 
-    .news-grid{display:grid; gap:12px}
-    .card{background:linear-gradient(180deg, #17181b, #0f1012); border:1px solid var(--stroke); border-radius:var(--radius); box-shadow:var(--shadow); overflow:hidden}
-    .card .media{height:140px; background:#0d0e10; display:block}
-    .card .media img{width:100%; height:100%; object-fit:cover}
-    .card .body{padding:14px}
-    .eyebrow{color:var(--muted); font-size:.75rem; letter-spacing:.3px; text-transform:uppercase}
-    .card h3{margin:6px 0 6px; font-size:1.05rem}
-    .card p{margin:0; color:#cfd3dc; font-size:.95rem}
-    .btn-row{position:sticky; bottom:0; left:0; right:0; display:grid; grid-template-columns:1fr 1fr; gap:10px; padding:12px 16px; background:linear-gradient(180deg, transparent, rgba(0,0,0,.45) 30%, rgba(0,0,0,.7));}
-    .btn{appearance:none; border:none; border-radius:14px; padding:12px 14px; font-weight:800; cursor:pointer}
-    .btn.primary{background:linear-gradient(180deg, var(--primary), #ffc700); color:#161616}
-    .btn.ghost{background:#181a1d; color:#f7f9ff; border:1px solid var(--stroke)}
+.news-grid{display:grid; gap:12px}
+.card{background:linear-gradient(180deg,#17181b,#0f1012); border:1px solid var(--stroke); border-radius:var(--radius); box-shadow:var(--shadow); overflow:hidden}
+.card .media{height:140px; background:#0d0e10; display:block}
+.card .media img{width:100%; height:100%; object-fit:cover}
+.card .body{padding:14px}
+.eyebrow{color:var(--muted); font-size:.75rem; letter-spacing:.3px; text-transform:uppercase}
+.card h3{margin:6px 0 6px; font-size:1.05rem}
+.card p{margin:0; color:#cfd3dc; font-size:.95rem}
+.btn-row{position:sticky; bottom:0; left:0; right:0; display:grid; grid-template-columns:repeat(4,1fr); gap:10px; padding:12px 16px; background:linear-gradient(180deg, transparent, rgba(0,0,0,.45) 30%, rgba(0,0,0,.7));}
+.btn{appearance:none; border:none; border-radius:14px; padding:12px 14px; font-weight:800; cursor:pointer}
+.btn.primary{background:linear-gradient(180deg,var(--primary),#76e29f); color:#161616}
+.btn.ghost{background:#181a1d; color:#f7f9ff; border:1px solid var(--stroke)}
 
-    /* Auth */
-    dialog{border:none; border-radius:18px; background:linear-gradient(180deg, #15161a, #0f1012); color:#fff; width:min(520px, 92vw); box-shadow:var(--shadow);}
-    dialog::backdrop{background:rgba(0,0,0,.55)}
-    .form{display:grid; gap:12px; padding:16px}
-    .field{display:grid; gap:6px}
-    label{font-size:.9rem; color:#e5e7ef}
-    input, select, textarea{width:100%; padding:12px 12px; border-radius:12px; border:1px solid var(--stroke); background:#0e0f12; color:#fff}
+dialog{border:none; border-radius:18px; background:linear-gradient(180deg,#15161a,#0f1012); color:#fff; width:min(520px, 92vw); box-shadow:var(--shadow);}
+dialog::backdrop{background:rgba(0,0,0,.55)}
+.form{display:grid; gap:12px; padding:16px}
+.field{display:grid; gap:6px}
+label{font-size:.9rem; color:#e5e7ef}
+input, select, textarea{width:100%; padding:12px 12px; border-radius:12px; border:1px solid var(--stroke); background:#0e0f12; color:#fff}
 
-    /* Dashboard */
-    .tabs{display:flex; gap:8px; border-bottom:1px solid var(--stroke); margin-bottom:12px}
-    .tab{padding:10px 12px; border-radius:12px; border:1px solid var(--stroke); background:#121317; cursor:pointer; font-weight:700; color:#dbe0ec}
-    .tab.active{background:linear-gradient(180deg, #1d1f24, #111216); border-color:#2a2b31}
+.tabs{display:flex; gap:8px; border-bottom:1px solid var(--stroke); margin-bottom:12px}
+.tab{padding:10px 12px; border-radius:12px; border:1px solid var(--stroke); background:#121317; cursor:pointer; font-weight:700; color:#dbe0ec}
+.tab.active{background:linear-gradient(180deg,#1d1f24,#111216); border-color:#2a2b31}
 
-    .profile{display:grid; gap:12px}
-    .chip{display:inline-flex; align-items:center; gap:8px; padding:6px 10px; border-radius:999px; border:1px solid var(--stroke); font-size:.85rem; color:#cfd3dc}
-
-    .row{display:flex; gap:12px; flex-wrap:wrap}
-    .grow{flex:1 1 200px}
-
-    table{width:100%; border-collapse:collapse; background:#0f1012; border:1px solid var(--stroke); border-radius:14px; overflow:hidden}
-    th,td{padding:12px 10px; border-bottom:1px solid var(--stroke); text-align:left}
-    th{background:#131419}
-
-    .status{font-weight:900; padding:6px 10px; border-radius:999px; display:inline-block}
-    .paid{background:rgba(34,197,94,.15); color:#86efac; border:1px solid rgba(34,197,94,.35)}
-    .due{background:rgba(239,68,68,.15); color:#fecaca; border:1px solid rgba(239,68,68,.35)}
-    .pending{background:rgba(253,224,71,.15); color:#fef08a; border:1px solid rgba(253,224,71,.35)}
-
-    .footer-space{height:18vh}
-    .right{justify-self:end}
-    .divider{height:1px; background:var(--stroke); margin:8px 0}
-
-    /* Tiny helpers */
-    .muted{color:var(--muted)}
-    .center{text-align:center}
-    .hidden{display:none !important}
-  </style>
+.profile{display:grid; gap:12px}
+.chip{display:inline-flex; align-items:center; gap:8px; padding:6px 10px; border-radius:999px; border:1px solid var(--stroke); font-size:.85rem; color:#cfd3dc}
+.row{display:flex; gap:12px; flex-wrap:wrap}
+.grow{flex:1 1 200px}
+table{width:100%; border-collapse:collapse; background:#0f1012; border:1px solid var(--stroke); border-radius:14px; overflow:hidden}
+th,td{padding:12px 10px; border-bottom:1px solid var(--stroke); text-align:left}
+th{background:#131419}
+.status{font-weight:900; padding:6px 10px; border-radius:999px; display:inline-block}
+.paid{background:rgba(34,197,94,.15); color:#86efac; border:1px solid rgba(34,197,94,.35)}
+.due{background:rgba(239,68,68,.15); color:#fecaca; border:1px solid rgba(239,68,68,.35)}
+.pending{background:rgba(253,224,71,.15); color:#fef08a; border:1px solid rgba(253,224,71,.35)}
+.footer-space{height:18vh}
+.right{justify-self:end}
+.divider{height:1px; background:var(--stroke); margin:8px 0}
+.muted{color:var(--muted)}
+.center{text-align:center}
+.hidden{display:none !important}
+</style>
 </head>
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Patinaje App Móvil</title>
-
-  <!-- theme-color dentro de <head> -->
-  <meta name="theme-color" content="#FFD700">
-
-  <!-- manifest dentro de <head> -->
-  <link rel="manifest" href="/manifest.json">
-
-  <!-- Tus estilos y <style>…> van aquí como ya los tienes -->
-</head>
-<link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#FFD700">
 <body>
-  <div class="app" id="app">
-    <header>
-      <div class="logo">⛸️</div>
-      <div class="title">Patinaje LAT App <small class="muted">Noticias • Tiempos • Pagos</small></div>
-      <button id="logoutBtn" class="btn ghost right hidden" title="Cerrar sesión">Salir</button>
-    </header>
+<div class="app" id="app">
+<header>
+  <div class="logo">⛸️</div>
+  <div class="title">Patinaje LAT App <small class="muted">Noticias • Tiempos • Pagos</small></div>
+  <button id="logoutBtn" class="btn ghost right hidden" title="Cerrar sesión">Salir</button>
+</header>
 
-    <!-- NEWS / LANDING -->
-    <section id="newsScreen" class="screen active">
-      <h2 style="margin:6px 0 12px">Noticias de Patinaje</h2>
-      <p class="muted" style="margin-top:-6px">Resumen rápido pensado para móvil. (Puedes conectar tu propio feed más adelante).</p>
-      <div id="newsList" class="news-grid"></div>
-      <div class="btn-row">
-        <button class="btn ghost" id="openRegister">Registrarse</button>
-        <button class="btn primary" id="openLogin">Iniciar sesión</button>
-        <button class="btn primary" id="openLoginEntrenadores">Iniciar sesión entrenadores</button>
-      </div>
-    </section>
-
-    <!-- DASHBOARD -->
-    <section id="dashboard" class="screen">
-      <div class="tabs" role="tablist">
-        <button class="tab active" data-tab="perfil">Patinadora</button>
-        <button class="tab" data-tab="tiempos">Mejores tiempos</button>
-        <button class="tab" data-tab="pagos">Pagos</button>
-        <button class="tab" data-tab="comentarios">Comentarios</button>
-      </div>
-
-      <!-- PERFIL -->
-      <div id="tab-perfil" class="tabpanel">
-        <div class="row">
-          <div class="card grow">
-            <div class="body">
-              <div class="row" style="align-items:center">
-                <img id="athleteAvatar" src="https://cdn.jsdelivr.net/gh/edent/SuperTinyIcons/images/svg/whatsapp.svg" alt="avatar" style="width:64px;height:64px;border-radius:14px; background:#16181d; padding:10px; border:1px solid var(--stroke)">
-                <div class="grow">
-                  <h3 id="athleteName" style="margin:0 0 6px">—</h3>
-                  <div class="muted" id="athleteSubtitle">Club — • Categoría —</div>
-                </div>
-                <select id="athleteSelect" class="right"></select>
-              </div>
-              <div class="divider"></div>
-              <div class="profile">
-                <div class="row">
-                  <div class="chip" id="chipEdad">Edad: —</div>
-                  <div class="chip" id="chipEstatura">Estatura: —</div>
-                  <div class="chip" id="chipNumero">Dorsal: —</div>
-                </div>
-                <div class="row">
-                  <div class="grow">
-                    <label for="caracExtra" class="muted">Características (texto libre)</label>
-                    <textarea id="caracExtra" rows="3" placeholder="Técnica, estilo, puntos fuertes..."></textarea>
-                  </div>
-                </div>
-                <div class="row">
-                  <button class="btn primary" id="saveProfile">Guardar perfil</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- TIEMPOS -->
-      <div id="tab-tiempos" class="tabpanel hidden">
-        <div class="card">
-          <div class="body">
-            <div class="row" style="align-items:end">
-              <div class="grow">
-                <label class="muted">Distancia</label>
-                <input id="distInput" placeholder="200m / 400m / 1km" />
-              </div>
-              <div class="grow">
-                <label class="muted">Tiempo (mm:ss.ms)</label>
-                <input id="timeInput" placeholder="00:28.45" />
-              </div>
-              <button class="btn ghost" id="addTime">Agregar</button>
-            </div>
-          </div>
-        </div>
-
-        <div class="card" style="margin-top:12px">
-          <div class="body">
-            <h3 style="margin-top:0">Tabla de mejores tiempos</h3>
-            <table id="timesTable">
-              <thead>
-                <tr><th>Distancia</th><th>Mejor tiempo</th><th>Fecha</th><th></th></tr>
-              </thead>
-              <tbody></tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-
-      <!-- PAGOS -->
-      <div id="tab-pagos" class="tabpanel hidden">
-        <div class="card">
-          <div class="body">
-            <div class="row" style="align-items:center">
-              <div class="grow">
-                <h3 style="margin:0">Estado de pago</h3>
-                <div id="payStatus" class="status pending">Pendiente</div>
-                <p class="muted" id="payNote" style="margin-top:8px">Sube el comprobante o marca como pagado.</p>
-              </div>
-              <select id="payState">
-                <option value="pending">Pendiente</option>
-                <option value="paid">Pagado</option>
-                <option value="due">En mora</option>
-              </select>
-            </div>
-            <div class="row" style="margin-top:10px">
-              <input type="file" id="payReceipt" accept="image/*,application/pdf" class="grow" />
-              <button class="btn ghost" id="savePayment">Guardar</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- COMENTARIOS -->
-      <div id="tab-comentarios" class="tabpanel hidden">
-        <div class="card">
-          <div class="body">
-            <div id="commentsList" class="profile" style="max-height:40vh; overflow:auto"></div>
-            <div class="divider"></div>
-            <div class="row">
-              <input id="commentInput" class="grow" placeholder="Comentario del profesor..." />
-              <button class="btn primary" id="addComment">Enviar</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="footer-space"></div>
-    </section>
+<!-- NOTICIAS / LANDING -->
+<section id="newsScreen" class="screen active">
+  <h2 style="margin:6px 0 12px">Noticias de Patinaje</h2>
+  <p class="muted" style="margin-top:-6px">Resumen rápido pensado para móvil.</p>
+  <div id="newsList" class="news-grid"></div>
+  <div class="btn-row">
+    <button class="btn ghost" id="openRegisterAthlete">Registro Deportista</button>
+    <button class="btn primary" id="openLoginAthlete">Login Deportista</button>
+    <button class="btn ghost" id="openRegisterTrainer">Registro Entrenador</button>
+    <button class="btn primary" id="openLoginTrainer">Login Entrenador</button>
   </div>
+</section>
 
-  <!-- DIALOGS -->
-  <dialog id="dlgLogin">
-    <form method="dialog" class="form" id="loginForm">
-      <h3 style="margin:0">Iniciar sesión</h3>
-      <div class="field">
-        <label>Correo</label>
-        <input id="loginEmail" type="email" required placeholder="tu@correo.com" />
+<!-- DASHBOARD -->
+<section id="dashboard" class="screen">
+  <div id="trainerSelectContainer"></div>
+  <div class="tabs" role="tablist">
+    <button class="tab active" data-tab="perfil">Perfil</button>
+    <button class="tab" data-tab="tiempos">Tiempos</button>
+    <button class="tab" data-tab="pagos">Pagos</button>
+    <button class="tab" data-tab="comentarios">Comentarios</button>
+  </div>
+  <div id="tab-perfil" class="tabpanel">
+    <div class="row">
+      <div class="card grow">
+        <div class="body" id="perfilBody">
+          <!-- Contenido dinámico -->
+        </div>
       </div>
-      <div class="field">
-        <label>Contraseña</label>
-        <input id="loginPass" type="password" required placeholder="•••••••" />
+    </div>
+  </div>
+  <div id="tab-tiempos" class="tabpanel hidden">
+    <div class="card">
+      <div class="body">
+        <div class="row" style="align-items:end">
+          <div class="grow">
+            <label class="muted">Distancia</label>
+            <input id="distInput" placeholder="200m / 400m / 1km" />
+          </div>
+          <div class="grow">
+            <label class="muted">Tiempo (mm:ss.ms)</label>
+            <input id="timeInput" placeholder="00:28.45" />
+          </div>
+          <button class="btn ghost" id="addTime">Agregar</button>
+        </div>
       </div>
-      <menu style="display:flex; gap:8px; margin:0; padding:0; justify-content:flex-end">
-        <button class="btn ghost" value="cancel">Cancelar</button>
-        <button class="btn primary" value="default">Entrar</button>
-      </menu>
-      <p class="muted" style="margin:8px 0 0">¿No tienes cuenta? <a href="#" id="toRegister">Regístrate</a></p>
-    </form>
-  </dialog>
+    </div>
+    <div class="card" style="margin-top:12px">
+      <div class="body">
+        <h3 style="margin-top:0">Tabla de mejores tiempos</h3>
+        <table id="timesTable">
+          <thead><tr><th>Distancia</th><th>Mejor tiempo</th><th>Fecha</th><th></th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div id="tab-pagos" class="tabpanel hidden">
+    <div class="card">
+      <div class="body">
+        <div class="row" style="align-items:center">
+          <div class="grow">
+            <h3 style="margin:0">Estado de pago</h3>
+            <div id="payStatus" class="status pending">Pendiente</div>
+            <p class="muted" id="payNote" style="margin-top:8px">Sube el comprobante o marca como pagado.</p>
+          </div>
+          <select id="payState">
+            <option value="pending">Pendiente</option>
+            <option value="paid">Pagado</option>
+            <option value="due">En mora</option>
+          </select>
+        </div>
+        <div class="row" style="margin-top:10px">
+          <input type="file" id="payReceipt" accept="image/*,application/pdf" class="grow" />
+          <button class="btn ghost" id="savePayment">Guardar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="tab-comentarios" class="tabpanel hidden">
+    <div class="card">
+      <div class="body">
+        <div id="commentsList" class="profile" style="max-height:40vh; overflow:auto"></div>
+        <div class="divider"></div>
+        <div class="row">
+          <input id="commentInput" class="grow" placeholder="Comentario del profesor..." />
+          <button class="btn primary" id="addComment">Agregar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-space"></div>
+</section>
 
-  <dialog id="dlgRegister">
-    <form method="dialog" class="form" id="regForm">
-      <h3 style="margin:0">Crear cuenta</h3>
-      <div class="field"><label>Nombre</label><input id="regName" required placeholder="Tu nombre"/></div>
-      <div class="field"><label>Correo</label><input id="regEmail" type="email" required placeholder="tu@correo.com"/></div>
-      <div class="field"><label>Contraseña</label><input id="regPass" type="password" required/></div>
-      <menu style="display:flex; gap:8px; margin:0; padding:0; justify-content:flex-end">
-        <button class="btn ghost" value="cancel">Cancelar</button>
-        <button class="btn primary" value="default">Crear</button>
-      </menu>
-    </form>
-  </dialog>
-  <dialog id="dlgLoginEntrenadores">
-  <form method="dialog" class="form" id="loginFormEntrenadores">
-    <h3 style="margin:0">Inicio de Sesión - Entrenadores</h3>
+<!-- DIALOGS -->
+<dialog id="dlgRegister">
+  <form method="dialog" class="form" id="registerForm">
+    <h3>Registro</h3>
     <div class="field">
-      <label>Usuario</label>
-      <input type="text" id="loginUserEntrenador" required placeholder="Usuario" />
+      <label>Tipo de usuario</label>
+      <select id="userTypeSelect">
+        <option value="athlete">Deportista</option>
+        <option value="trainer">Entrenador</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Nombre</label>
+      <input type="text" id="regName" required />
     </div>
     <div class="field">
       <label>Contraseña</label>
-      <input type="password" id="loginPassEntrenador" required placeholder="•••••••" />
+      <input type="password" id="regPass" required />
     </div>
-    <menu style="display:flex; gap:8px; margin:0; padding:0; justify-content:flex-end">
-      <button class="btn ghost" value="cancel">Cancelar</button>
-      <button class="btn primary" value="default">Ingresar</button>
+    <menu>
+      <button class="btn ghost" id="cancelReg">Cancelar</button>
+      <button class="btn primary" id="submitReg">Registrar</button>
     </menu>
   </form>
 </dialog>
-  <script>
-    /* ==========================
-       Datos base (localStorage)
-    ========================== */
-    const LS = {
-      users: 'pat_users',
-      session: 'pat_session',
-      athletes: 'pat_athletes',
-      times: 'pat_times',
-      payments: 'pat_payments',
-      comments: 'pat_comments',
-      news: 'pat_news',
-    };
 
-    function seed() {
-      if (!localStorage.getItem(LS.users)) {
-        const demoUsers = [{name:'Profesor Demo', email:'pro@demo.com', pass:'123456'}];
-        localStorage.setItem(LS.users, JSON.stringify(demoUsers));
-      }
-      if (!localStorage.getItem(LS.athletes)) {
-        const demoAthletes = [
-          {id:'A1', nombre:'Valentina Rojas', edad:12, club:'Tintal', categoria:'Semiprofesional', estatura:'1.52m', dorsal:'27', extra:''},
-          {id:'A2', nombre:'Sara Gómez', edad:14, club:'Bogotá Flyers', categoria:'Profesional', estatura:'1.60m', dorsal:'18', extra:''},
-          {id:'A3', nombre:'Mariana Díaz', edad:10, club:'Skate Norte', categoria:'Semiprofesional', estatura:'1.45m', dorsal:'05', extra:''}
-        ];
-        localStorage.setItem(LS.athletes, JSON.stringify(demoAthletes));
-      }
-      if (!localStorage.getItem(LS.times)) {
-        const t = { A1:[{dist:'200m', time:'00:28.45', date:'2025-08-10'}], A2:[], A3:[] };
-        localStorage.setItem(LS.times, JSON.stringify(t));
-      }
-      if (!localStorage.getItem(LS.payments)) {
-        const p = { A1:{state:'pending', receipt:null, note:''}, A2:{state:'paid', receipt:null}, A3:{state:'due', receipt:null} };
-        localStorage.setItem(LS.payments, JSON.stringify(p));
-      }
-      if (!localStorage.getItem(LS.comments)) {
-        const c = { A1:[{by:'Profe Ana', text:'Buena salida, mejorar curva 2', at:Date.now()}], A2:[], A3:[] };
-        localStorage.setItem(LS.comments, JSON.stringify(c));
-      }
-      if (!localStorage.getItem(LS.news)) {
-        const demoNews = [
-          {title:'Liga local: resultados fin de semana', excerpt:'Gran jornada con récords personales en 200m.', img:'https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?q=80&w=1200&auto=format&fit=crop', date:'Hoy'},
-          {title:'Convocatoria campamento de velocidad', excerpt:'Inscripciones abiertas para atletas 10-16 años.', img:'https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=1200&auto=format&fit=crop', date:'Ayer'},
-          {title:'Tips de técnica: postura y empuje', excerpt:'Pequeñas mejoras que suman segundos.', img:'https://images.unsplash.com/photo-1539874754764-5a96559165b7?q=80&w=1200&auto=format&fit=crop', date:'Esta semana'}
-        ];
-        localStorage.setItem(LS.news, JSON.stringify(demoNews));
-      }
-    }
+<dialog id="dlgLogin">
+  <form method="dialog" class="form" id="loginForm">
+    <h3>Iniciar sesión</h3>
+    <div class="field">
+      <label>Tipo de usuario</label>
+      <select id="loginTypeSelect">
+        <option value="athlete">Deportista</option>
+        <option value="trainer">Entrenador</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Nombre</label>
+      <input type="text" id="loginName" required />
+    </div>
+    <div class="field">
+      <label>Contraseña</label>
+      <input type="password" id="loginPass" required />
+    </div>
+    <menu>
+      <button class="btn ghost" id="cancelLogin">Cancelar</button>
+      <button class="btn primary" id="submitLogin">Ingresar</button>
+    </menu>
+  </form>
+</dialog>
 
-    /* =============== Utilidad DOM =============== */
-    const $ = (q, el=document) => el.querySelector(q);
-    const $$ = (q, el=document) => [...el.querySelectorAll(q)];
-
-    function show(id){ $$('.screen').forEach(s=>s.classList.remove('active')); $('#'+id).classList.add('active'); }
-
-    function toast(msg){
-      const t=document.createElement('div');
-      t.textContent=msg; t.style.position='fixed'; t.style.bottom='16px'; t.style.left='50%'; t.style.transform='translateX(-50%)'; t.style.background='rgba(0,0,0,.8)'; t.style.color='#fff'; t.style.padding='10px 14px'; t.style.border='1px solid var(--stroke)'; t.style.borderRadius='12px'; t.style.zIndex=9999; document.body.appendChild(t); setTimeout(()=>t.remove(), 1500);
-    }
-
-    /* =============== NEWS =============== */
-    function renderNews(){
-      const list = JSON.parse(localStorage.getItem(LS.news) || '[]');
-      const wrap = $('#newsList');
-      wrap.innerHTML = list.map(n=>`<article class="card">\n  <a class="media" href="#" tabindex="-1"><img src="${n.img}" alt=""></a>\n  <div class="body">\n    <div class="eyebrow">${n.date}</div>\n    <h3>${n.title}</h3>\n    <p>${n.excerpt}</p>\n  </div>\n</article>`).join('');
-    }
-
-    /* =============== AUTH =============== */
-    function users(){ return JSON.parse(localStorage.getItem(LS.users)||'[]'); }
-    function saveUsers(u){ localStorage.setItem(LS.users, JSON.stringify(u)); }
-
-    function doLogin(email, pass){
-      const u = users().find(x=>x.email===email && x.pass===pass);
-      if(!u) return false;
-      localStorage.setItem(LS.session, JSON.stringify({email:u.email, name:u.name}));
-      return true;
-    }
-    function doRegister(name, email, pass){
-      const u = users();
-      if(u.some(x=>x.email===email)) return {ok:false, msg:'Ese correo ya existe'};
-      u.push({name,email,pass}); saveUsers(u); return {ok:true};
-    }
-    function isLogged(){ return !!localStorage.getItem(LS.session); }
-    function session(){ return JSON.parse(localStorage.getItem(LS.session)||'null'); }
-
-    /* =============== ATHLETES & UI =============== */
-    function athletes(){ return JSON.parse(localStorage.getItem(LS.athletes)||'[]'); }
-    function setAthletes(a){ localStorage.setItem(LS.athletes, JSON.stringify(a)); }
-
-    function renderAthleteSelect(){
-      const a = athletes();
-      const sel = $('#athleteSelect');
-      sel.innerHTML = a.map(x=>`<option value="${x.id}">${x.nombre}</option>`).join('');
-      if(a[0]) sel.value = a[0].id;
-      loadAthlete(sel.value);
-      sel.onchange = ()=> loadAthlete(sel.value);
-    }
-
-    function loadAthlete(id){
-      const a = athletes().find(x=>x.id===id); if(!a) return;
-      $('#athleteName').textContent = a.nombre;
-      $('#athleteSubtitle').textContent = `Club ${a.club} • ${a.categoria}`;
-      $('#chipEdad').textContent = `Edad: ${a.edad}`;
-      $('#chipEstatura').textContent = `Estatura: ${a.estatura}`;
-      $('#chipNumero').textContent = `Dorsal: ${a.dorsal}`;
-      $('#caracExtra').value = a.extra||'';
-      renderTimes(id); renderPayment(id); renderComments(id);
-    }
-
-    /* =============== TIMES =============== */
-    function getTimes(){ return JSON.parse(localStorage.getItem(LS.times)||'{}'); }
-    function setTimes(t){ localStorage.setItem(LS.times, JSON.stringify(t)); }
-
-    function renderTimes(id){
-      const t = getTimes()[id] || [];
-      const tbody = $('#timesTable tbody');
-      tbody.innerHTML = t.map((r,i)=>`<tr>\n  <td>${r.dist}</td>\n  <td>${r.time}</td>\n  <td>${r.date}</td>\n  <td><button class="btn ghost" data-del-time="${i}">Borrar</button></td>\n</tr>`).join('');
-      $$('[data-del-time]').forEach(btn=> btn.onclick = () => { deleteTime(id, +btn.dataset.delTime); });
-    }
-    function addTime(id, dist, time){
-      if(!dist || !time) return toast('Completa distancia y tiempo');
-      const all = getTimes(); all[id] = all[id]||[]; all[id].push({dist, time, date:new Date().toISOString().slice(0,10)}); setTimes(all); renderTimes(id); toast('Tiempo agregado');
-    }
-    function deleteTime(id, idx){ const all=getTimes(); all[id].splice(idx,1); setTimes(all); renderTimes(id); }
-
-    /* =============== PAYMENTS =============== */
-    function getPayments(){ return JSON.parse(localStorage.getItem(LS.payments)||'{}'); }
-    function setPayments(p){ localStorage.setItem(LS.payments, JSON.stringify(p)); }
-
-    function renderPayment(id){
-      const p = getPayments()[id] || {state:'pending'};
-      const el = $('#payStatus');
-      el.className = 'status ' + (p.state==='paid'?'paid':p.state==='due'?'due':'pending');
-      el.textContent = p.state==='paid' ? 'Pagado' : p.state==='due' ? 'En mora' : 'Pendiente';
-      $('#payState').value = p.state;
-      $('#payNote').textContent = p.receipt ? ('Recibo subido: '+p.receipt.name) : 'Sube el comprobante o marca como pagado.';
-    }
-    function savePayment(id){
-      const state = $('#payState').value; const file = $('#payReceipt').files[0]||null;
-      const all = getPayments(); all[id] = all[id] || {state:'pending', receipt:null};
-      all[id].state = state; if(file) all[id].receipt = {name:file.name, size:file.size};
-      setPayments(all); renderPayment(id); toast('Pago actualizado');
-      $('#payReceipt').value = '';
-    }
-
-    /* =============== COMMENTS =============== */
-    function getComments(){ return JSON.parse(localStorage.getItem(LS.comments)||'{}'); }
-    function setComments(c){ localStorage.setItem(LS.comments, JSON.stringify(c)); }
-
-    function renderComments(id){
-      const list = getComments()[id] || [];
-      const box = $('#commentsList');
-      if(!list.length){ box.innerHTML = '<p class="muted">Sin comentarios aún.</p>'; return; }
-      box.innerHTML = list.map(c=>`<div class="card"><div class="body"><div class="eyebrow">${new Date(c.at).toLocaleString()}</div><strong>${c.by}</strong><p style="margin:6px 0 0">${c.text}</p></div></div>`).join('');
-      box.scrollTop = box.scrollHeight;
-    }
-    function addComment(id, text){
-      if(!text) return; const s=session(); const all=getComments(); all[id]=all[id]||[]; all[id].push({by:s?.name||'Profe', text, at:Date.now()}); setComments(all); renderComments(id); $('#commentInput').value='';
-    }
-
-    /* =============== EVENTS =============== */
-    function wire(){
-      // Landing buttons
-      $('#openLogin').onclick = ()=> $('#dlgLogin').showModal();
-      $('#openRegister').onclick = ()=> $('#dlgRegister').showModal();
-      $('#toRegister').onclick = (e)=>{ e.preventDefault(); $('#dlgLogin').close(); $('#dlgRegister').showModal(); };
-
-      // Auth submit
-      $('#loginForm').onsubmit = (e)=>{
-        e.preventDefault(); const ok = doLogin($('#loginEmail').value.trim(), $('#loginPass').value.trim());
-        if(!ok) return toast('Credenciales inválidas');
-        $('#dlgLogin').close(); postLogin();
-      };
-      $('#regForm').onsubmit = (e)=>{
-        e.preventDefault(); const r = doRegister($('#regName').value.trim(), $('#regEmail').value.trim(), $('#regPass').value); if(!r.ok) return toast(r.msg); $('#dlgRegister').close(); toast('Cuenta creada. Inicia sesión.');
-      };
-
-      // Tabs
-      $$('.tab').forEach(t=> t.onclick = ()=>{
-        $$('.tab').forEach(x=>x.classList.remove('active')); t.classList.add('active');
-        $$('.tabpanel').forEach(p=>p.classList.add('hidden'));
-        $('#tab-'+t.dataset.tab).classList.remove('hidden');
-      });
-
-      // Profile save
-      $('#saveProfile').onclick = ()=>{
-        const id = $('#athleteSelect').value; const a = athletes(); const i=a.findIndex(x=>x.id===id); a[i].extra = $('#caracExtra').value; setAthletes(a); toast('Perfil guardado');
-      };
-
-      // Times
-      $('#addTime').onclick = ()=> addTime($('#athleteSelect').value, $('#distInput').value.trim(), $('#timeInput').value.trim());
-
-      // Payments
-      $('#savePayment').onclick = ()=> savePayment($('#athleteSelect').value);
-
-      // Comments
-      $('#addComment').onclick = ()=> addComment($('#athleteSelect').value, $('#commentInput').value.trim());
-
-      // Logout
-      $('#logoutBtn').onclick = ()=>{ localStorage.removeItem(LS.session); show('newsScreen'); $('#logoutBtn').classList.add('hidden'); };
-    }
-
-    function postLogin(){
-      $('#logoutBtn').classList.remove('hidden');
-      renderAthleteSelect();
-      show('dashboard');
-    }
-
-    // Init
-    seed(); wire(); renderNews(); if(isLogged()) postLogin();
-  </script>
-</body>
 <script>
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/service-worker.js')
-      .then(() => console.log('Service Worker registrado'))
-      .catch((error) => console.log('Error al registrar Service Worker', error));
-  }
-</script>
-<script>
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("/service-worker.js");
+// ====== Noticias demo ======
+// ====== Noticias demo con imágenes ======
+const newsList = document.getElementById('newsList');
+const noticiasDemo = [
+  {title:"Copa Tintal 2025 se acerca", desc:"Todo listo para la gran competencia.", img:"https://via.placeholder.com/400x140/22c55e/000000?text=Copa+Tintal"},
+  {title:"Entrenamientos intensivos", desc:"Nuevos programas de preparación.", img:"https://via.placeholder.com/400x140/22c55e/000000?text=Entrenamientos"},
+  {title:"Patinaje sobre ruedas", desc:"Tips para mejorar velocidad y técnica.", img:"https://via.placeholder.com/400x140/22c55e/000000?text=Patinaje"},
+];
+
+noticiasDemo.forEach(n => {
+  const card = document.createElement('div'); card.className='card';
+  card.innerHTML=`
+    <div class="media"><img src="${n.img}" alt="${n.title}"></div>
+    <div class="body">
+      <h3>${n.title}</h3>
+      <p>${n.desc}</p>
+    </div>
+  `;
+  newsList.appendChild(card);
+});
+// ====== Screens ======
+const newsScreen = document.getElementById('newsScreen');
+const dashboard = document.getElementById('dashboard');
+
+// ====== Dialogs ======
+const dlgRegister = document.getElementById('dlgRegister');
+const dlgLogin = document.getElementById('dlgLogin');
+
+document.getElementById('openRegisterAthlete').onclick=()=>{dlgRegister.showModal(); userTypeSelect.value='athlete'}
+document.getElementById('openRegisterTrainer').onclick=()=>{dlgRegister.showModal(); userTypeSelect.value='trainer'}
+document.getElementById('openLoginAthlete').onclick=()=>{dlgLogin.showModal(); loginTypeSelect.value='athlete'}
+document.getElementById('openLoginTrainer').onclick=()=>{dlgLogin.showModal(); loginTypeSelect.value='trainer'}
+document.getElementById('cancelReg').onclick=()=>dlgRegister.close();
+document.getElementById('cancelLogin').onclick=()=>dlgLogin.close();
+
+// ====== LocalStorage usuarios ======
+let users = JSON.parse(localStorage.getItem('athletes')||'[]');
+let trainers = JSON.parse(localStorage.getItem('trainers')||'[]');
+let currentUser=null, currentType=null;
+
+// ====== Registro ======
+document.getElementById('submitReg').onclick=(e)=>{
+  e.preventDefault();
+  const name=regName.value.trim(), pass=regPass.value.trim(), type=userTypeSelect.value;
+  if(!name||!pass){alert('Complete todos los campos'); return;}
+  if(type==='athlete' && users.find(u=>u.name===name)){alert('Ya existe'); return;}
+  if(type==='trainer' && trainers.find(u=>u.name===name)){alert('Ya existe'); return;}
+  const newUser={name, pass, times:[], payments:{state:'pending', receipt:null}, comments:[]};
+  if(type==='athlete'){users.push(newUser); localStorage.setItem('athletes', JSON.stringify(users))}
+  else{trainers.push(newUser); localStorage.setItem('trainers', JSON.stringify(trainers))}
+  alert('Registrado con éxito'); dlgRegister.close();
+};
+
+// ====== Login ======
+document.getElementById('submitLogin').onclick=(e)=>{
+  e.preventDefault();
+  const name=loginName.value.trim(), pass=loginPass.value.trim(), type=loginTypeSelect.value;
+  let u=null;
+  if(type==='athlete') u=users.find(u=>u.name===name && u.pass===pass);
+  else u=trainers.find(u=>u.name===name && u.pass===pass);
+  if(!u){alert('Usuario o contraseña incorrecta'); return;}
+  currentUser=u; currentType=type;
+  dlgLogin.close();
+  showDashboard();
+};
+
+// ====== Logout ======
+document.getElementById('logoutBtn').onclick=()=>{
+  currentUser=null; currentType=null;
+  dashboard.classList.remove('active'); newsScreen.classList.add('active');
+  logoutBtn.classList.add('hidden');
+};
+
+// ====== Dashboard ======
+const logoutBtn=document.getElementById('logoutBtn');
+const tabs=document.querySelectorAll('.tab');
+tabs.forEach(t=>{
+  t.onclick=()=>{
+    tabs.forEach(x=>x.classList.remove('active'));
+    t.classList.add('active');
+    document.querySelectorAll('.tabpanel').forEach(p=>p.classList.add('hidden'));
+    document.getElementById('tab-'+t.dataset.tab).classList.remove('hidden');
+  };
+});
+
+function showDashboard(){
+  newsScreen.classList.remove('active');
+  dashboard.classList.add('active');
+  logoutBtn.classList.remove('hidden');
+  renderPerfil();
+  renderTimes();
+  renderPayment();
+  renderComments();
+}
+
+// ====== PERFIL ======
+const perfilBody=document.getElementById('perfilBody');
+function renderPerfil(){
+  perfilBody.innerHTML=`<p><strong>Nombre:</strong> <input id="editName" value="${currentUser.name}"/></p>
+  <p><strong>Contraseña:</strong> <input type="password" id="editPass" value="${currentUser.pass}"/></p>
+  <button class="btn primary" id="saveProfile">Guardar</button>`;
+  document.getElementById('saveProfile').onclick=()=>{
+    currentUser.name=document.getElementById('editName').value.trim();
+    currentUser.pass=document.getElementById('editPass').value.trim();
+    saveUsers();
+    alert('Perfil guardado');
+    renderPerfil();
+  };
+}
+
+// ====== Tiempos ======
+const distInput=document.getElementById('distInput'), timeInput=document.getElementById('timeInput'), timesTable=document.getElementById('timesTable').querySelector('tbody');
+document.getElementById('addTime').onclick=()=>{
+  const d=distInput.value.trim(), t=timeInput.value.trim();
+  if(!d||!t){alert('Complete campos'); return;}
+  currentUser.times.push({dist:d,time:t,date:new Date().toLocaleString()});
+  saveUsers(); renderTimes();
+  distInput.value=''; timeInput.value='';
+};
+function renderTimes(){
+  timesTable.innerHTML='';
+  currentUser.times.forEach((tt,i)=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td>${tt.dist}</td><td>${tt.time}</td><td>${tt.date}</td><td><button class="btn ghost" data-i="${i}">Eliminar</button></td>`;
+    tr.querySelector('button').onclick=()=>{currentUser.times.splice(i,1); saveUsers(); renderTimes();}
+    timesTable.appendChild(tr);
+  });
+}
+
+// ====== Pagos ======
+const payState=document.getElementById('payState'), payStatus=document.getElementById('payStatus'), payNote=document.getElementById('payNote'), payReceipt=document.getElementById('payReceipt');
+document.getElementById('savePayment').onclick=()=>{
+  currentUser.payments.state=payState.value;
+  if(payReceipt.files[0]) currentUser.payments.receipt=payReceipt.files[0].name;
+  saveUsers(); renderPayment();
+};
+function renderPayment(){
+  payStatus.className='status '+currentUser.payments.state;
+  payStatus.textContent=currentUser.payments.state==='paid'?'Pagado':currentUser.payments.state==='due'?'En mora':'Pendiente';
+  payNote.textContent=currentUser.payments.receipt?'Archivo: '+currentUser.payments.receipt:'Sube el comprobante o marca como pagado';
+}
+
+// ====== Comentarios ======
+const commentsList=document.getElementById('commentsList'), commentInput=document.getElementById('commentInput');
+document.getElementById('addComment').onclick=()=>{
+  if(commentInput.value.trim()!==''){currentUser.comments.push({text:commentInput.value, date:new Date().toLocaleString()}); commentInput.value=''; saveUsers(); renderComments();}
+};
+function renderComments(){
+  commentsList.innerHTML='';
+  currentUser.comments.forEach(c=>{
+    const div=document.createElement('div'); div.className='chip';
+    div.textContent=`${c.text} (${c.date})`; commentsList.appendChild(div);
+  });
+}
+
+// ====== Guardar ======
+function saveUsers(){
+  localStorage.setItem('athletes', JSON.stringify(users));
+  localStorage.setItem('trainers', JSON.stringify(trainers));
 }
 </script>
-<script>
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/service-worker.js')
-      .then(()=>console.log('Service Worker registrado'))
-      .catch(err=>console.error('SW error', err));
-  }
-</script>
+</body>
 </html>
