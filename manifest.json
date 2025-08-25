@@ -4,10 +4,18 @@
   "id": "/?source=pwa",
   "description": "Aplicación PWA de Patinaje Bogotá para consultas y eventos.",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#0b0b0c",
   "theme_color": "#FFD700",
   "orientation": "portrait",
+  "dir": "ltr",
+  "lang": "es",
+  "iarc_rating_id": "pending",
+  "categories": ["sports", "fitness", "events"],
+  "prefer_related_applications": false,
+  "related_applications": [],
+  "scope_extensions": [],
   "launch_handler": {
     "client_mode": ["navigate-existing"]
   },
