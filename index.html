@@ -1,401 +1,1004 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<title>Patinaje App Móvil</title>
-<meta name="theme-color" content="#0b0b0c" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<title>Patinaje LAT — App</title>
+<meta name="theme-color" content="#071009" />
 <style>
-:root{
-  --bg:#0b0b0c;
-  --card:#121315;
-  --muted:#8d8f98;
-  --primary:#22c55e;
-  --primary-ink:#191919;
-  --success:#22c55e;
-  --danger:#ef4444;
-  --stroke:#232428;
-  --shadow:0 10px 30px rgba(0,0,0,.35);
-  --radius:16px;
-}
-*{box-sizing:border-box}
-html,body{height:100%; margin:0; font-family:system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif;}
-body{background:var(--bg); color:#f5f7fb;}
-.app{min-height:100vh; max-width:820px; margin:0 auto; display:flex; flex-direction:column;}
-header{
-  position:sticky; top:0; z-index:40;
-  display:flex; align-items:center; gap:.85rem; padding:14px 16px; background:rgba(10,10,11,.85);
-  backdrop-filter: blur(8px); border-bottom:1px solid var(--stroke);
-}
-.logo{width:34px; height:34px; border-radius:12px; background:linear-gradient(135deg, var(--primary), #76e29f); color:#111; display:grid; place-items:center; font-weight:900}
-.title{font-weight:800; letter-spacing:.2px}
-.title small{display:block; color:var(--muted); font-weight:600; margin-top:-2px}
-
-.screen{padding:16px; display:none;}
-.screen.active{display:block}
-
-.news-grid{display:grid; gap:12px}
-.card{background:linear-gradient(180deg,#17181b,#0f1012); border:1px solid var(--stroke); border-radius:var(--radius); box-shadow:var(--shadow); overflow:hidden}
-.card .media{height:140px; background:#0d0e10; display:block}
-.card .media img{width:100%; height:100%; object-fit:cover}
-.card .body{padding:14px}
-.eyebrow{color:var(--muted); font-size:.75rem; letter-spacing:.3px; text-transform:uppercase}
-.card h3{margin:6px 0 6px; font-size:1.05rem}
-.card p{margin:0; color:#cfd3dc; font-size:.95rem}
-
-.btn{appearance:none; border:none; border-radius:14px; padding:12px 14px; font-weight:800; cursor:pointer}
-.btn.primary{background:linear-gradient(180deg,var(--primary),#76e29f); color:#161616}
-.btn.ghost{background:#181a1d; color:#f7f9ff; border:1px solid var(--stroke)}
-
-dialog{border:none; border-radius:18px; background:linear-gradient(180deg,#15161a,#0f1012); color:#fff; width:min(520px, 92vw); box-shadow:var(--shadow);}
-dialog::backdrop{background:rgba(0,0,0,.55)}
-.form{display:grid; gap:12px; padding:16px}
-.field{display:grid; gap:6px}
-label{font-size:.9rem; color:#e5e7ef}
-input, select, textarea{width:100%; padding:12px 12px; border-radius:12px; border:1px solid var(--stroke); background:#0e0f12; color:#fff}
-
-.tabs{display:flex; gap:8px; border-bottom:1px solid var(--stroke); margin-bottom:12px}
-.tab{padding:10px 12px; border-radius:12px; border:1px solid var(--stroke); background:#121317; cursor:pointer; font-weight:700; color:#dbe0ec}
-.tab.active{background:linear-gradient(180deg,#1d1f24,#111216); border-color:#2a2b31}
-
-.profile{display:grid; gap:12px}
-.chip{display:inline-flex; align-items:center; gap:8px; padding:6px 10px; border-radius:999px; border:1px solid var(--stroke); font-size:.85rem; color:#cfd3dc}
-.row{display:flex; gap:12px; flex-wrap:wrap}
-.grow{flex:1 1 200px}
-table{width:100%; border-collapse:collapse; background:#0f1012; border:1px solid var(--stroke); border-radius:14px; overflow:hidden}
-th,td{padding:12px 10px; border-bottom:1px solid var(--stroke); text-align:left}
-th{background:#131419}
-.status{font-weight:900; padding:6px 10px; border-radius:999px; display:inline-block}
-.paid{background:rgba(34,197,94,.15); color:#86efac; border:1px solid rgba(34,197,94,.35)}
-.due{background:rgba(239,68,68,.15); color:#fecaca; border:1px solid rgba(239,68,68,.35)}
-.pending{background:rgba(253,224,71,.15); color:#fef08a; border:1px solid rgba(253,224,71,.35)}
-.footer-space{height:18vh}
-.right{justify-self:end}
-.divider{height:1px; background:var(--stroke); margin:8px 0}
-.muted{color:var(--muted)}
-.center{text-align:center}
-.hidden{display:none !important}
-
-/* BOTÓN FLOTANTE */
-#floatingBtnContainer {position:fixed; bottom:24px; right:24px; z-index:50;}
-#floatingBtn {width:56px; height:56px; border-radius:50%; font-size:28px; background:var(--primary); color:#111; border:none; cursor:pointer; box-shadow:var(--shadow);}
-#floatingMenu {display:flex; flex-direction:column; gap:8px; margin-top:8px;}
+  /* ----------------- THEME (verde + negro) ----------------- */
+  :root{
+    --bg:#071009;
+    --panel:#0f1411;
+    --muted:#9aa3a0;
+    --accent:#15a758;      /* verde principal */
+    --accent-2:#3fe28f;    /* acento claro */
+    --card:#0b0f0d;
+    --stroke:rgba(255,255,255,0.04);
+    --radius:14px;
+    --glass: rgba(255,255,255,0.02);
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial;color:#eaf7ef;background:var(--bg)}
+  .wrap{max-width:1100px;margin:18px auto;padding:14px;display:grid;grid-template-columns:1fr 320px;gap:18px}
+  header{grid-column:1/-1;display:flex;gap:12px;align-items:center;padding:14px;border-radius:12px;background:linear-gradient(90deg,#04281a,#09321f);box-shadow:0 6px 30px rgba(3,6,4,.6);border:1px solid var(--stroke)}
+  .logo{width:52px;height:52px;border-radius:12px;background:linear-gradient(135deg,var(--accent-2),var(--accent));display:grid;place-items:center;font-weight:900;color:#031207;font-size:22px}
+  .hdr-title{font-weight:900;font-size:1.15rem}
+  .hdr-sub{color:var(--muted);font-size:.85rem}
+  header .right{margin-left:auto;display:flex;gap:8px;align-items:center}
+  .role-badge{color:var(--muted);font-weight:700}
+  .btn{border:0;border-radius:12px;padding:10px 12px;font-weight:800;cursor:pointer}
+  .btn.ghost{background:transparent;border:1px solid var(--stroke);color:#eaf7ef}
+  .btn.primary{background:linear-gradient(180deg,var(--accent),var(--accent-2));color:#021207}
+  .btn.danger{background:#d9534f;color:#fff}
+  main{grid-column:1/2}
+  aside{grid-column:2/3;position:sticky;top:20px}
+  /* cards */
+  .card{background:linear-gradient(180deg,var(--panel),var(--card));border-radius:var(--radius);padding:12px;border:1px solid var(--stroke);box-shadow:0 8px 30px rgba(2,6,4,.5)}
+  h2{margin:0 0 6px;color:var(--accent-2)}
+  p.muted{color:var(--muted);margin:0 0 8px}
+  /* news grid */
+  .news-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-top:12px}
+  .news-item{overflow:hidden;border-radius:12px;border:1px solid var(--stroke);background:#07120e}
+  .news-item img{width:100%;height:130px;object-fit:cover;display:block}
+  .news-item .nbody{padding:10px}
+  .tabs{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+  .tab{padding:8px 10px;border-radius:12px;background:transparent;border:1px solid var(--stroke);cursor:pointer;font-weight:700;color:#eaf7ef}
+  .tab.active{background:linear-gradient(180deg,#0e2818,#062114);box-shadow:inset 0 0 0 1px rgba(63,226,143,.06)}
+  label{display:block;color:#dff6e9;font-size:.9rem;margin-bottom:6px}
+  input,select,textarea{width:100%;padding:9px;border-radius:10px;border:1px solid var(--stroke);background:transparent;color:#ecfff5}
+  textarea{min-height:90px;resize:vertical}
+  table{width:100%;border-collapse:collapse;margin-top:8px;font-size:.9rem}
+  th,td{padding:8px;border-bottom:1px solid rgba(255,255,255,0.03);text-align:left;color:#eaf7ef}
+  th{background:rgba(255,255,255,0.02);font-weight:800}
+  .small{font-size:.85rem;color:var(--muted)}
+  .photo-preview{width:120px;height:80px;border-radius:10px;background:var(--glass);display:grid;place-items:center;border:1px dashed rgba(255,255,255,0.04);overflow:hidden}
+  .photo-preview img{width:100%;height:100%;object-fit:cover}
+  .avatar{width:72px;height:72px;border-radius:12px;background:var(--glass);display:grid;place-items:center;font-size:28px}
+  .muted{color:var(--muted)}
+  .actions{display:flex;gap:8px;justify-content:flex-end;margin-top:8px}
+  /* responsive */
+  @media (max-width:980px){.wrap{grid-template-columns:1fr;padding:12px}aside{position:static;margin-top:12px}}
 </style>
 </head>
 <body>
-<div class="app" id="app">
-<header>
-  <div class="logo">⛸️</div>
-  <div class="title">Patinaje LAT App <small class="muted">Noticias • Tiempos • Pagos</small></div>
-  <button id="logoutBtn" class="btn ghost right hidden" title="Cerrar sesión">Salir</button>
-</header>
-
-<!-- NOTICIAS / LANDING -->
-<section id="newsScreen" class="screen active">
-  <h2 style="margin:6px 0 12px">Noticias de Patinaje</h2>
-  <p class="muted" style="margin-top:-6px">Resumen rápido pensado para móvil.</p>
-  <div id="newsList" class="news-grid"></div>
-</section>
-
-<!-- DASHBOARD -->
-<section id="dashboard" class="screen">
-  <h2>Bienvenido <span id="userName"></span></h2>
-  <div class="tabs" role="tablist">
-    <button class="tab active" data-tab="perfil">Perfil</button>
-    <button class="tab" data-tab="tiempos">Tiempos</button>
-    <button class="tab" data-tab="pagos">Pagos</button>
-    <button class="tab" data-tab="comentarios">Comentarios</button>
-  </div>
-  <div id="tab-perfil" class="tabpanel">
-    <div class="row">
-      <div class="card grow">
-        <div class="body" id="perfilBody"></div>
+  <div class="wrap">
+    <header>
+      <div class="logo">⛸</div>
+      <div>
+        <div class="hdr-title">Patinaje LAT</div>
+        <div class="hdr-sub">Noticias · Perfil · Evolución · Pagos</div>
       </div>
-    </div>
-  </div>
-  <div id="tab-tiempos" class="tabpanel hidden">
-    <div class="card">
-      <div class="body">
-        <div class="row" style="align-items:end">
-          <div class="grow">
-            <label class="muted">Distancia</label>
-            <input id="distInput" placeholder="200m / 400m / 1km" />
+      <div class="right">
+        <div id="roleBadge" class="role-badge">Invitado</div>
+        <button id="logoutBtn" class="btn ghost" style="display:none">Salir</button>
+      </div>
+    </header>
+
+    <!-- MAIN COLUMN -->
+    <main>
+      <!-- NEWS -->
+      <section id="newsScreen" class="card">
+        <h2>Noticias</h2>
+        <p class="muted">Últimas noticias y comunicados. Pantalla principal.</p>
+        <div id="newsGrid" class="news-grid"></div>
+      </section>
+
+      <!-- DASHBOARD (hidden until login) -->
+      <section id="dashboard" class="card" style="display:none; margin-top:12px">
+        <h2>Dashboard</h2>
+        <p class="muted">Accede a las secciones con las pestañas.</p>
+        <div class="tabs" id="mainTabs" role="tablist">
+          <button class="tab active" data-tab="perfil">Perfil</button>
+          <button class="tab" data-tab="pagos">Pagos</button>
+          <button class="tab" data-tab="evolucion">Evolución</button>
+          <button class="tab" data-tab="asistencia">Asistencia</button>
+          <button class="tab" data-tab="plantilla">Plantilla</button>
+          <button class="tab" data-tab="redes">Redes</button>
+          <button class="tab" data-tab="horario">Horario</button>
+          <button class="tab" data-tab="resultados">Resultados</button>
+          <button class="tab" data-tab="blog">Blog</button>
+          <button class="tab" data-tab="eventos">Eventos</button>
+          <button class="tab" data-tab="comentarios">Comentarios</button>
+          <button class="tab" data-tab="admin" id="adminTab" style="display:none">Administración</button>
+        </div>
+
+        <!-- Perfil -->
+        <div id="tab-perfil" class="tabpanel">
+          <h3>Ficha Técnica</h3>
+          <p class="small muted">Campos editables. Guarda para persistir en tu navegador.</p>
+          <div style="display:flex;gap:12px;flex-wrap:wrap">
+            <div style="flex:1;min-width:260px">
+              <label>Grupo</label><input id="f_grupo" />
+              <label>Entrenador</label><select id="f_entrenador"><option value="">-- Ninguno --</option></select>
+              <label>Peso (kg)</label><input id="f_peso" type="number" />
+              <label>Talla (cm)</label><input id="f_talla" type="number" />
+              <label>Tipo de sangre</label><input id="f_sangre" />
+              <label>EPS</label><input id="f_eps" />
+              <label>Número de contacto</label><input id="f_contacto" />
+              <label>Documento</label><input id="f_documento" />
+              <label>Barrio / Residencia</label><input id="f_barrio" />
+              <label>Fecha de nacimiento</label><input id="f_nacimiento" type="date" />
+            </div>
+            <div style="min-width:180px">
+              <label>Foto identidad</label>
+              <div class="photo-preview" id="photoPreview"><span class="small muted">Sin imagen</span></div>
+              <label style="margin-top:8px">Subir foto</label>
+              <input id="f_foto" type="file" accept="image/*" />
+              <div class="actions">
+                <button id="editarFichaBtn" class="btn ghost">Editar</button>
+                <button id="guardarFicha" class="btn primary">Guardar</button>
+                <button id="eliminarCuenta" class="btn danger" style="display:none">Eliminar</button>
+              </div>
+            </div>
           </div>
-          <div class="grow">
-            <label class="muted">Tiempo (mm:ss.ms)</label>
-            <input id="timeInput" placeholder="00:28.45" />
+        </div>
+
+        <!-- Pagos -->
+        <div id="tab-pagos" class="tabpanel" style="display:none;margin-top:12px">
+          <h3>Pagos</h3>
+          <div style="display:flex;gap:12px;flex-wrap:wrap">
+            <div style="flex:1;min-width:220px">
+              <label>Estado</label>
+              <select id="payState"><option value="pending">Pendiente</option><option value="paid">Pagado</option><option value="due">En mora</option></select>
+              <label>Concepto</label><input id="payConcept" placeholder="Mensualidad, Inscripción..." />
+              <label>Monto</label><input id="payAmount" type="number" step="0.01" />
+              <label>Fecha de pago</label><input id="payDate" type="date" />
+              <label>Recibo (imagen/pdf)</label><input id="payReceipt" type="file" accept="image/*,application/pdf" />
+              <div style="display:flex;gap:8px;margin-top:8px">
+                <button id="savePayment" class="btn primary">Registrar pago</button>
+                <button id="savePayExtras" class="btn ghost">Guardar extras</button>
+              </div>
+            </div>
+
+            <div style="flex:1;min-width:220px">
+              <label>PSE (simulado)</label>
+              <div style="display:flex;gap:8px;align-items:center"><input id="pseEnabled" type="checkbox"/><span class="small muted">Activar PSE</span></div>
+              <label style="margin-top:8px">Paga aquí (URL)</label><input id="payLink" placeholder="https://..." />
+              <div style="margin-top:12px" class="card">
+                <div><strong>Historial de pagos</strong></div>
+                <table id="paymentsTable"><thead><tr><th>Fecha</th><th>Concepto</th><th>Monto</th><th>Estado</th><th>Comprobante</th><th></th></tr></thead><tbody></tbody></table>
+              </div>
+
+              <div style="margin-top:10px" class="card">
+                <div><strong>Cuentas bancarias</strong></div>
+                <label>Banco</label><input id="bankName" />
+                <label>Número</label><input id="bankNumber" />
+                <label>Tipo</label><select id="bankType"><option>Ahorros</option><option>Corriente</option></select>
+                <div style="display:flex;gap:8px;margin-top:8px"><button id="addBank" class="btn ghost">Agregar</button></div>
+                <table id="banksTable"><thead><tr><th>Banco</th><th>Número</th><th>Tipo</th><th></th></tr></thead><tbody></tbody></table>
+              </div>
+            </div>
           </div>
-          <button class="btn ghost" id="addTime">Agregar</button>
         </div>
-      </div>
-    </div>
-    <div class="card" style="margin-top:12px">
-      <div class="body">
-        <h3 style="margin-top:0">Tabla de mejores tiempos</h3>
-        <table id="timesTable">
-          <thead><tr><th>Distancia</th><th>Mejor tiempo</th><th>Fecha</th><th></th></tr></thead>
-          <tbody></tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-  <div id="tab-pagos" class="tabpanel hidden">
-    <div class="card">
-      <div class="body">
-        <div class="row" style="align-items:center">
-          <div class="grow">
-            <h3 style="margin:0">Estado de pago</h3>
-            <div id="payStatus" class="status pending">Pendiente</div>
-            <p class="muted" id="payNote" style="margin-top:8px">Sube el comprobante o marca como pagado.</p>
+
+        <!-- Evolución -->
+        <div id="tab-evolucion" class="tabpanel" style="display:none;margin-top:12px">
+          <h3>Evolución Deportista</h3>
+          <div style="display:flex;gap:12px;flex-wrap:wrap">
+            <div style="flex:1;min-width:260px">
+              <label>Fecha</label><input id="evDate" type="date" />
+              <label>Puntualidad (multiple)</label>
+              <select id="evPunctuality" multiple size="3"><option>Excelente</option><option>Buena</option><option>Regular</option><option>Deficiente</option></select>
+              <label>Asistencia</label><select id="evAttendance"><option>Asistió</option><option>Tardanza</option><option>Faltó</option></select>
+            </div>
+            <div style="flex:1;min-width:260px">
+              <label>1) Motricidad (0-10)</label><input id="evMotricidad" type="range" min="0" max="10" value="5" />
+              <label>2) Técnica (0-10)</label><input id="evTecnica" type="range" min="0" max="10" value="5" />
+              <label>3) Capacidad física</label><input id="evFisica" type="range" min="0" max="10" value="5" />
+              <label>4) Comporta mental</label><input id="evMental" type="range" min="0" max="10" value="5" />
+            </div>
+            <div style="flex-basis:100%">
+              <label>Notas</label><textarea id="evNotes"></textarea>
+              <label>Vincular comentario (opcional)</label><input id="evCommentLink" />
+              <div style="display:flex;justify-content:flex-end;margin-top:8px"><button id="addEvolution" class="btn primary">Guardar evolución</button></div>
+            </div>
           </div>
-          <select id="payState">
-            <option value="pending">Pendiente</option>
-            <option value="paid">Pagado</option>
-            <option value="due">En mora</option>
-          </select>
+
+          <div style="margin-top:12px" class="card">
+            <strong>Histórico</strong>
+            <table id="evolutionTable"><thead><tr><th>Fecha</th><th>Puntualidad</th><th>Asistencia</th><th>Mot</th><th>Téc</th><th>Fís</th><th>Mental</th><th>Notas</th><th>Com</th><th></th></tr></thead><tbody></tbody></table>
+          </div>
         </div>
-        <div class="row" style="margin-top:10px">
-          <input type="file" id="payReceipt" accept="image/*,application/pdf" class="grow" />
-          <button class="btn ghost" id="savePayment">Guardar</button>
+
+        <!-- Asistencia -->
+        <div id="tab-asistencia" class="tabpanel" style="display:none;margin-top:12px">
+          <h3>Asistencia</h3>
+          <div style="display:flex;gap:12px;flex-wrap:wrap">
+            <div style="flex:1;min-width:220px">
+              <label>Fecha</label><input id="attDate" type="date" />
+              <label>Estado</label><select id="attStatus"><option>Asistió</option><option>Tardanza</option><option>Faltó</option></select>
+              <label>Notas</label><input id="attNotes" />
+              <div style="margin-top:8px"><button id="addAttendance" class="btn primary">Agregar</button></div>
+            </div>
+            <div style="flex:1;min-width:220px">
+              <table id="attendanceTable"><thead><tr><th>Fecha</th><th>Estado</th><th>Notas</th><th></th></tr></thead><tbody></tbody></table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Plantilla -->
+        <div id="tab-plantilla" class="tabpanel" style="display:none;margin-top:12px">
+          <h3>Plantilla Áreas</h3>
+          <div style="display:flex;gap:12px;flex-wrap:wrap">
+            <div style="flex:1;min-width:220px">
+              <label>Fecha</label><input id="plDate" type="date" />
+              <label>Motricidad (0-10)</label><input id="plMot" type="number" min="0" max="10" value="5"/>
+              <label>Técnica</label><input id="plTec" type="number" min="0" max="10" value="5"/>
+              <label>Capacidad física</label><input id="plFis" type="number" min="0" max="10" value="5"/>
+              <label>Comporta mental</label><input id="plMen" type="number" min="0" max="10" value="5"/>
+              <div style="margin-top:8px"><button id="addTemplateRow" class="btn primary">Agregar</button></div>
+            </div>
+            <div style="flex:1;min-width:220px">
+              <table id="templateTable"><thead><tr><th>Fecha</th><th>Mot</th><th>Téc</th><th>Fís</th><th>Mental</th><th>Prom</th><th></th></tr></thead><tbody></tbody></table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Redes -->
+        <div id="tab-redes" class="tabpanel" style="display:none;margin-top:12px">
+          <h3>Redes sociales — Patín Latino</h3>
+          <label>Instagram</label><input id="rs_ig" placeholder="https://instagram.com/..." />
+          <label>Facebook</label><input id="rs_fb" placeholder="https://facebook.com/..." />
+          <label>TikTok</label><input id="rs_tt" placeholder="https://tiktok.com/..." />
+          <label>YouTube</label><input id="rs_yt" placeholder="https://youtube.com/..." />
+          <div style="display:flex;gap:8px;margin-top:8px"><button id="saveSocial" class="btn primary">Guardar</button></div>
+          <div id="socialLinks" style="margin-top:12px"></div>
+        </div>
+
+        <!-- Horario -->
+        <div id="tab-horario" class="tabpanel" style="display:none;margin-top:12px">
+          <h3>Horario de entrenamiento</h3>
+          <label>Día</label><select id="schDay"><option>Lunes</option><option>Martes</option><option>Miércoles</option><option>Jueves</option><option>Viernes</option><option>Sábado</option><option>Domingo</option></select>
+          <label>Hora</label><input id="schTime" placeholder="18:00 - 20:00" />
+          <label>Lugar</label><input id="schPlace" />
+          <div style="display:flex;gap:8px;margin-top:8px"><button id="addSchedule" class="btn primary">Agregar</button></div>
+          <table id="scheduleTable"><thead><tr><th>Día</th><th>Hora</th><th>Lugar</th><th></th></tr></thead><tbody></tbody></table>
+        </div>
+
+        <!-- Resultados -->
+        <div id="tab-resultados" class="tabpanel" style="display:none;margin-top:12px">
+          <h3>Resultados deportivos</h3>
+          <label>Competencia</label><input id="resComp" />
+          <label>Categoría</label><input id="resCat" />
+          <label>Prueba</label><input id="resTest" />
+          <label>Posición</label><input id="resPos" type="number" />
+          <label>Marca</label><input id="resMark" placeholder="00:28.45" />
+          <div style="display:flex;gap:8px;margin-top:8px"><button id="addResult" class="btn primary">Agregar</button></div>
+          <table id="resultsTable"><thead><tr><th>Competencia</th><th>Categoría</th><th>Prueba</th><th>Pos</th><th>Marca</th><th></th></tr></thead><tbody></tbody></table>
+        </div>
+
+        <!-- Blog -->
+        <div id="tab-blog" class="tabpanel" style="display:none;margin-top:12px">
+          <h3>Blog / Recomendaciones</h3>
+          <label>Título</label><input id="blogTitle" />
+          <label>Autor</label><input id="blogAuthor" />
+          <label>Contenido</label><textarea id="blogContent"></textarea>
+          <div style="display:flex;gap:8px;margin-top:8px"><button id="addBlog" class="btn primary">Publicar</button></div>
+          <div id="blogList" style="margin-top:12px"></div>
+        </div>
+
+        <!-- Eventos -->
+        <div id="tab-eventos" class="tabpanel" style="display:none;margin-top:12px">
+          <h3>Próximos eventos</h3>
+          <label>Evento</label><input id="evnName"/>
+          <label>Fecha</label><input id="evnDate" type="date"/>
+          <label>Lugar</label><input id="evnPlace"/>
+          <label>Enlace</label><input id="evnLink"/>
+          <div style="display:flex;gap:8px;margin-top:8px"><button id="addEvent" class="btn primary">Agregar</button></div>
+          <table id="eventsTable"><thead><tr><th>Evento</th><th>Fecha</th><th>Lugar</th><th>Enlace</th><th></th></tr></thead><tbody></tbody></table>
+        </div>
+
+        <!-- Comentarios -->
+        <div id="tab-comentarios" class="tabpanel" style="display:none;margin-top:12px">
+          <h3>Comentarios</h3>
+          <div id="commentsList" style="max-height:260px;overflow:auto;margin-bottom:8px"></div>
+          <div style="display:flex;gap:8px"><input id="commentInput" class="small" placeholder="Comentario..." /><button id="addComment" class="btn primary">Agregar</button></div>
+        </div>
+
+        <!-- Admin -->
+        <div id="tab-admin" class="tabpanel" style="display:none;margin-top:12px">
+          <h3>Administración</h3>
+          <label>Filtrar</label><select id="adminFilterRole"><option value="all">Todos</option><option value="athlete">Deportistas</option><option value="trainer">Entrenadores</option><option value="admin">Administrativos</option></select>
+          <table id="adminUsersTable"><thead><tr><th>Rol</th><th>Nombre</th><th>Contacto</th><th>Acciones</th></tr></thead><tbody></tbody></table>
+        </div>
+
+      </section>
+    </main>
+
+    <!-- ASIDE / SIDEBAR -->
+    <aside>
+      <div class="card">
+        <div style="display:flex;gap:10px;align-items:center">
+          <div class="avatar" id="sideAvatar">👤</div>
+          <div>
+            <div id="sideName" style="font-weight:800">Invitado</div>
+            <div id="sideRole" class="small muted">No logueado</div>
+          </div>
+        </div>
+
+        <div style="margin-top:12px">
+          <button id="openUserMenu" class="btn ghost" style="width:100%">Usuario</button>
+          <div id="userMenu" style="display:none;margin-top:8px">
+            <button id="menuRegister" class="btn ghost" style="width:100%;margin-bottom:6px">Registro</button>
+            <button id="menuLogin" class="btn ghost" style="width:100%">Iniciar sesión</button>
+          </div>
+        </div>
+
+        <div style="margin-top:12px;display:flex;gap:8px;align-items:center">
+          <div class="photo-preview" id="sidePhotoPreview" style="width:84px;height:84px"><span class="small muted">ID</span></div>
+          <div>
+            <div class="small muted">Documento</div>
+            <div id="sideDocName" class="small muted">-</div>
+          </div>
+        </div>
+
+        <div style="margin-top:12px">
+          <div class="divider" style="height:1px;background:var(--stroke)"></div>
+          <div style="margin-top:8px">
+            <button id="goNews" class="btn ghost" style="width:100%;margin-bottom:6px">Noticias</button>
+            <button id="goDashboard" class="btn ghost" style="width:100%">Dashboard</button>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
-  <div id="tab-comentarios" class="tabpanel hidden">
-    <div class="card">
-      <div class="body">
-        <div id="commentsList" class="profile" style="max-height:40vh; overflow:auto"></div>
-        <div class="divider"></div>
-        <div class="row">
-          <input id="commentInput" class="grow" placeholder="Comentario del profesor..." />
-          <button class="btn primary" id="addComment">Agregar</button>
+    </aside>
+
+    <!-- DIALOGS: selector de tipo, register & login -->
+    <dialog id="userTypeDialog" style="padding:12px;border-radius:12px">
+      <form method="dialog" style="display:flex;flex-direction:column;gap:8px">
+        <h3>Selecciona tipo</h3>
+        <div style="display:flex;gap:8px">
+          <button type="button" data-type="athlete" class="btn ghost">Deportista</button>
+          <button type="button" data-type="trainer" class="btn ghost">Entrenador</button>
+          <button type="button" data-type="admin" class="btn ghost">Administrativo</button>
         </div>
-      </div>
-    </div>
+        <div style="display:flex;justify-content:flex-end"><button id="cancelUserType" class="btn ghost">Cancelar</button></div>
+      </form>
+    </dialog>
+
+    <dialog id="dlgRegister" style="padding:12px;border-radius:12px">
+      <form id="registerForm" method="dialog" style="display:flex;flex-direction:column;gap:8px">
+        <h3>Registro</h3>
+        <label>Nombre</label><input id="regName" required />
+        <label>Correo (opcional)</label><input id="regEmail" type="email" />
+        <label>Contraseña</label><input id="regPass" type="password" required />
+        <label>Confirmar</label><input id="regPass2" type="password" required />
+        <div style="display:flex;justify-content:flex-end;gap:8px"><button id="cancelReg" class="btn ghost">Cancelar</button><button id="submitReg" class="btn primary">Registrar</button></div>
+      </form>
+    </dialog>
+
+    <dialog id="dlgLogin" style="padding:12px;border-radius:12px">
+      <form id="loginForm" method="dialog" style="display:flex;flex-direction:column;gap:8px">
+        <h3>Ingresar</h3>
+        <label>Nombre</label><input id="loginName" required />
+        <label>Contraseña</label><input id="loginPass" type="password" required />
+        <div style="display:flex;justify-content:flex-end;gap:8px"><button id="cancelLogin" class="btn ghost">Cancelar</button><button id="submitLogin" class="btn primary">Ingresar</button></div>
+      </form>
+    </dialog>
+
   </div>
-  <div class="footer-space"></div>
-</section>
-
-<!-- BOTÓN FLOTANTE -->
-<div id="floatingBtnContainer">
-  <button id="floatingBtn" class="btn primary">+</button>
-  <div id="floatingMenu" class="hidden">
-    <button class="btn ghost" id="regBtn">Registro</button>
-    <button class="btn ghost" id="loginBtn">Iniciar sesión</button>
-  </div>
-</div>
-
-<!-- DIALOGO TIPO DE USUARIO -->
-<dialog id="userTypeDialog">
-  <form method="dialog" class="form" id="userTypeForm">
-    <h3>Seleccione tipo de usuario</h3>
-    <div class="field">
-      <button type="button" class="btn ghost" data-type="athlete">Deportista</button>
-      <button type="button" class="btn ghost" data-type="trainer">Entrenador</button>
-      <button type="button" class="btn ghost" data-type="admin">Administrativo</button>
-    </div>
-    <menu>
-      <button class="btn ghost" id="cancelUserType">Cancelar</button>
-    </menu>
-  </form>
-</dialog>
-
-<!-- DIALOGOS REGISTRO Y LOGIN -->
-<dialog id="dlgRegister">
-  <form method="dialog" class="form" id="registerForm">
-    <h3>Registro</h3>
-    <div class="field">
-      <label>Nombre</label>
-      <input type="text" id="regName" required />
-    </div>
-    <div class="field">
-      <label>Contraseña</label>
-      <input type="password" id="regPass" required />
-    </div>
-    <menu>
-      <button class="btn ghost" id="cancelReg">Cancelar</button>
-      <button class="btn primary" id="submitReg">Registrar</button>
-    </menu>
-  </form>
-</dialog>
-
-<dialog id="dlgLogin">
-  <form method="dialog" class="form" id="loginForm">
-    <h3>Iniciar sesión</h3>
-    <div class="field">
-      <label>Nombre</label>
-      <input type="text" id="loginName" required />
-    </div>
-    <div class="field">
-      <label>Contraseña</label>
-      <input type="password" id="loginPass" required />
-    </div>
-    <menu>
-      <button class="btn ghost" id="cancelLogin">Cancelar</button>
-      <button class="btn primary" id="submitLogin">Ingresar</button>
-    </menu>
-  </form>
-</dialog>
 
 <script>
-// ===== Noticias demo =====
-const newsList = document.getElementById('newsList');
-const noticiasDemo = [
-  {title:"Copa Tintal 2025 se acerca", desc:"Todo listo para la gran competencia.", img:"https://picsum.photos/300/140?1"},
-  {title:"Entrenamientos intensivos", desc:"Nuevos programas de preparación.", img:"https://picsum.photos/300/140?2"},
-  {title:"Patinaje sobre ruedas", desc:"Tips para mejorar velocidad y técnica.", img:"https://picsum.photos/300/140?3"},
+/* ========================= APP LOGIC (single-file) =========================
+   - All data stored in localStorage under keys for each role
+   - Roles: athlete, trainer, admin
+   - News are demo static items
+   - The UI shows/hides screens and updates per currentUser/currentRole
+   - This code is intentionally modular and commented
+   ============================================================================ */
+
+/* ---------- LocalStorage keys & helpers ---------- */
+const LS = {
+  athletes: 'patinaje_athletes_v1',
+  trainers: 'patinaje_trainers_v1',
+  admins: 'patinaje_admins_v1'
+};
+
+function load(role){
+  if(role==='athlete') return JSON.parse(localStorage.getItem(LS.athletes) || '[]');
+  if(role==='trainer') return JSON.parse(localStorage.getItem(LS.trainers) || '[]');
+  return JSON.parse(localStorage.getItem(LS.admins) || '[]');
+}
+function save(role, arr){
+  if(role==='athlete') localStorage.setItem(LS.athletes, JSON.stringify(arr));
+  else if(role==='trainer') localStorage.setItem(LS.trainers, JSON.stringify(arr));
+  else localStorage.setItem(LS.admins, JSON.stringify(arr));
+}
+
+/* ---------- in-memory arrays ---------- */
+let athletes = load('athlete');
+let trainers = load('trainer');
+let admins = load('admin');
+
+let currentUser = null;
+let currentRole = null;
+
+/* ---------- Demo news ---------- */
+const news = [
+  {title:'Copa Verde 2026 - Inscripciones abiertas',desc:'Inscripciones para categorías juvenil y elite',img:'https://picsum.photos/640/360?1'},
+  {title:'Seminario Técnico',desc:'Técnicas de impulso y salida',img:'https://picsum.photos/640/360?2'},
+  {title:'Nutrición para velocidad',desc:'Recomendaciones de especialistas',img:'https://picsum.photos/640/360?3'},
+  {title:'Campamento de preparación',desc:'Cupos limitados, aplica ya',img:'https://picsum.photos/640/360?4'}
 ];
-noticiasDemo.forEach(n => {
-  const card = document.createElement('div'); card.className='card';
-  card.innerHTML=`<div class="media"><img src="${n.img}"/></div>
-  <div class="body"><h3>${n.title}</h3><p>${n.desc}</p></div>`;
-  newsList.appendChild(card);
-});
+function renderNews(){
+  const grid = document.getElementById('newsGrid'); grid.innerHTML='';
+  news.forEach(n=>{
+    const d = document.createElement('div'); d.className='news-item';
+    d.innerHTML = `<img src="${n.img}" alt=""><div class="nbody"><h4 style="margin:0">${n.title}</h4><p class="small muted" style="margin-top:6px">${n.desc}</p></div>`;
+    grid.appendChild(d);
+  });
+}
 
-// ===== Floating btn =====
-const floatingBtn = document.getElementById('floatingBtn');
-const floatingMenu = document.getElementById('floatingMenu');
-floatingBtn.onclick = () => floatingMenu.classList.toggle('hidden');
-
-const userTypeDialog = document.getElementById('userTypeDialog');
-let selectedAction = null;
-
-document.getElementById('regBtn').onclick = () => { 
-  selectedAction = 'register'; 
-  floatingMenu.classList.add('hidden');
-  userTypeDialog.showModal();
-};
-document.getElementById('loginBtn').onclick = () => { 
-  selectedAction = 'login'; 
-  floatingMenu.classList.add('hidden');
-  userTypeDialog.showModal();
-};
-
-// ====== LocalStorage ======
-let athletes = JSON.parse(localStorage.getItem('athletes')||'[]');
-let trainers = JSON.parse(localStorage.getItem('trainers')||'[]');
-let admins = JSON.parse(localStorage.getItem('admins')||'[]');
-let currentUser = null, currentRole = null;
-
-// ===== Dialog tipo usuario =====
-userTypeDialog.querySelectorAll('button[data-type]').forEach(b=>{
-  b.onclick = ()=>{
-    const type = b.dataset.type;
-    userTypeDialog.close();
-    if(selectedAction==='register') dlgRegister.showModal(), dlgRegister.dataset.type=type;
-    if(selectedAction==='login') dlgLogin.showModal(), dlgLogin.dataset.type=type;
-  }
-});
-document.getElementById('cancelUserType').onclick = ()=>userTypeDialog.close();
-
-// ===== Registro =====
-const dlgRegisterEl = document.getElementById('dlgRegister');
-document.getElementById('cancelReg').onclick=()=>dlgRegisterEl.close();
-document.getElementById('submitReg').onclick=(e)=>{
-  e.preventDefault();
-  const name = document.getElementById('regName').value.trim();
-  const pass = document.getElementById('regPass').value.trim();
-  const type = dlgRegisterEl.dataset.type;
-  if(!name||!pass){alert('Complete todos los campos'); return;}
-  let arr;
-  if(type==='athlete') arr=athletes;
-  else if(type==='trainer') arr=trainers;
-  else arr=admins;
-  if(arr.find(u=>u.name===name)){alert('Ya existe'); return;}
-  arr.push({name,pass,times:[],payments:{state:'pending'},comments:[]});
-  localStorage.setItem(type+'s', JSON.stringify(arr));
-  alert('Registrado con éxito');
-  dlgRegisterEl.close();
-};
-
-// ===== Login =====
-const dlgLoginEl = document.getElementById('dlgLogin');
-document.getElementById('cancelLogin').onclick=()=>dlgLoginEl.close();
-document.getElementById('submitLogin').onclick=(e)=>{
-  e.preventDefault();
-  const name = document.getElementById('loginName').value.trim();
-  const pass = document.getElementById('loginPass').value.trim();
-  const type = dlgLoginEl.dataset.type;
-  let arr;
-  if(type==='athlete') arr=athletes;
-  else if(type==='trainer') arr=trainers;
-  else arr=admins;
-  const user = arr.find(u=>u.name===name && u.pass===pass);
-  if(!user){alert('Usuario o contraseña incorrecta'); return;}
-  currentUser = user; currentRole = type;
-  dlgLoginEl.close();
-  showDashboard();
-};
-
-// ===== Dashboard =====
+/* ---------- UI refs ---------- */
 const newsScreen = document.getElementById('newsScreen');
 const dashboard = document.getElementById('dashboard');
 const logoutBtn = document.getElementById('logoutBtn');
-const tabs=document.querySelectorAll('.tab');
-tabs.forEach(t=>{
-  t.onclick=()=>{
-    tabs.forEach(x=>x.classList.remove('active'));
+const roleBadge = document.getElementById('roleBadge');
+const sideName = document.getElementById('sideName');
+const sideRole = document.getElementById('sideRole');
+const sideAvatar = document.getElementById('sideAvatar');
+const sidePhotoPreview = document.getElementById('sidePhotoPreview');
+const sideDocName = document.getElementById('sideDocName');
+
+/* ---------- Tab navigation ---------- */
+document.querySelectorAll('.tab').forEach(t=>{
+  t.addEventListener('click', ()=>{
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
     t.classList.add('active');
-    document.querySelectorAll('.tabpanel').forEach(p=>p.classList.add('hidden'));
-    document.getElementById('tab-'+t.dataset.tab).classList.remove('hidden');
-  }
+    document.querySelectorAll('.tabpanel').forEach(p=>p.style.display='none');
+    const id = 'tab-' + t.dataset.tab;
+    const el = document.getElementById(id);
+    if(el) el.style.display = 'block';
+  });
 });
-logoutBtn.onclick=()=>{
-  currentUser=null; currentRole=null;
-  dashboard.classList.remove('active'); newsScreen.classList.add('active');
-  logoutBtn.classList.add('hidden');
+
+/* ---------- User menu / dialogs ---------- */
+const openUserMenu = document.getElementById('openUserMenu');
+const userMenu = document.getElementById('userMenu');
+openUserMenu.addEventListener('click', ()=> userMenu.style.display = (userMenu.style.display === 'block' ? 'none' : 'block'));
+
+document.getElementById('menuRegister').addEventListener('click', ()=> showUserTypeDialog('register'));
+document.getElementById('menuLogin').addEventListener('click', ()=> showUserTypeDialog('login'));
+
+let selectedAction = null;
+function showUserTypeDialog(action){
+  selectedAction = action;
+  document.getElementById('userTypeDialog').showModal();
+}
+document.querySelectorAll('#userTypeDialog button[data-type]').forEach(b=>{
+  b.addEventListener('click', ()=>{
+    const type = b.dataset.type;
+    document.getElementById('userTypeDialog').close();
+    if(selectedAction==='register'){ const dlg = document.getElementById('dlgRegister'); dlg.dataset.type = type; dlg.showModal(); }
+    else { const dlg = document.getElementById('dlgLogin'); dlg.dataset.type = type; dlg.showModal(); }
+  });
+});
+document.getElementById('cancelUserType').addEventListener('click', (e)=>{ e.preventDefault(); document.getElementById('userTypeDialog').close(); });
+document.getElementById('cancelReg').addEventListener('click', (e)=>{ e.preventDefault(); document.getElementById('dlgRegister').close(); });
+document.getElementById('cancelLogin').addEventListener('click', (e)=>{ e.preventDefault(); document.getElementById('dlgLogin').close(); });
+
+/* ---------- Registration ---------- */
+document.getElementById('submitReg').addEventListener('click', (e)=>{
+  e.preventDefault();
+  const name = document.getElementById('regName').value.trim();
+  const email = document.getElementById('regEmail').value.trim();
+  const pass = document.getElementById('regPass').value;
+  const pass2 = document.getElementById('regPass2').value;
+  const type = document.getElementById('dlgRegister').dataset.type;
+  if(!name || !pass){ alert('Nombre y contraseña obligatorios'); return; }
+  if(pass !== pass2){ alert('Las contraseñas no coinciden'); return; }
+  const arr = (type==='athlete')?athletes:(type==='trainer')?trainers:admins;
+  if(arr.find(u=>u.name.toLowerCase()===name.toLowerCase())){ alert('Ese nombre ya existe para ese rol'); return; }
+  const newUser = {
+    name, email, pass, role:type,
+    profile:{ grupo:'', entrenador:'', peso:'', talla:'', sangre:'', eps:'', contacto:'', documento:'', barrio:'', fotoDataUrl:'', nacimiento:'' },
+    payments:{ state:'pending', pse:false, receipts:[], banks:[], payLink:'' },
+    evolution:[], attendance:[], template:[], social:{ig:'',fb:'',tt:'',yt:''}, schedule:[], results:[], blog:[], events:[], comments:[]
+  };
+  arr.push(newUser); save(type, arr); reloadArrays();
+  alert('Registro exitoso: ' + name + ' (' + type + ')');
+  document.getElementById('dlgRegister').close();
+});
+
+/* ---------- Login ---------- */
+document.getElementById('submitLogin').addEventListener('click', (e)=>{
+  e.preventDefault();
+  const name = document.getElementById('loginName').value.trim();
+  const pass = document.getElementById('loginPass').value;
+  const type = document.getElementById('dlgLogin').dataset.type;
+  if(!name || !pass){ alert('Completa todos los campos'); return; }
+  const arr = (type==='athlete')?athletes:(type==='trainer')?trainers:admins;
+  const user = arr.find(u=>u.name===name && u.pass===pass);
+  if(!user){ alert('Usuario o contraseña incorrecta'); return; }
+  currentUser = user; currentRole = type;
+  document.getElementById('dlgLogin').close();
+  afterLogin();
+});
+
+/* ---------- After login: update UI ---------- */
+function afterLogin(){
+  newsScreen.style.display='none';
+  document.getElementById('dashboard').style.display='block';
+  roleBadge.textContent = capitalize(currentRole);
+  logoutBtn.style.display='inline-flex';
+  sideName.textContent = currentUser.name;
+  sideRole.textContent = capitalize(currentRole);
+  document.getElementById('sideDocName').textContent = currentUser.profile?.documento || '-';
+  sideAvatar.textContent = currentUser.profile?.fotoDataUrl ? '' : currentUser.name.charAt(0).toUpperCase();
+  if(currentUser.profile?.fotoDataUrl) sidePhotoPreview.innerHTML = `<img src="${currentUser.profile.fotoDataUrl}">`;
+  else sidePhotoPreview.innerHTML = '<span class="small muted">ID</span>';
+
+  document.getElementById('adminTab').style.display = (currentRole==='admin')? 'inline-block':'none';
+
+  // load many UI areas
+  fillFichaForm(); populateTrainerOptions(); renderPaymentState(); renderPayments(); renderBanks();
+  renderEvolution(); renderAttendance(); renderTemplate(); renderSocial(); renderSchedule(); renderResults(); renderBlog(); renderEvents(); renderComments(); renderAdminUsersTable();
+
+  // show perfil tab by default
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+  document.querySelector('.tab[data-tab="perfil"]').classList.add('active');
+  document.querySelectorAll('.tabpanel').forEach(p=>p.style.display='none');
+  document.getElementById('tab-perfil').style.display='block';
+}
+
+/* ---------- Logout ---------- */
+logoutBtn.addEventListener('click', ()=>{
+  currentUser = null; currentRole = null;
+  newsScreen.style.display='block'; dashboard.style.display='none';
+  logoutBtn.style.display='none'; roleBadge.textContent='Invitado';
+  sideName.textContent='Invitado'; sideRole.textContent='No logueado'; sidePhotoPreview.innerHTML='<span class="small muted">ID</span>'; document.getElementById('sideDocName').textContent='-';
+});
+
+/* ---------- Ficha (perfil) ---------- */
+const f = {
+  grupo: document.getElementById('f_grupo'),
+  entrenador: document.getElementById('f_entrenador'),
+  peso: document.getElementById('f_peso'),
+  talla: document.getElementById('f_talla'),
+  sangre: document.getElementById('f_sangre'),
+  eps: document.getElementById('f_eps'),
+  contacto: document.getElementById('f_contacto'),
+  documento: document.getElementById('f_documento'),
+  barrio: document.getElementById('f_barrio'),
+  nacimiento: document.getElementById('f_nacimiento'),
+  foto: document.getElementById('f_foto'),
+  photoPreview: document.getElementById('photoPreview')
 };
-
-// ===== Mostrar dashboard =====
-function showDashboard(){
-  newsScreen.classList.remove('active'); dashboard.classList.add('active');
-  logoutBtn.classList.remove('hidden');
-  document.getElementById('userName').textContent=currentUser.name;
-  renderPerfil();
-  renderTimes();
+document.getElementById('editarFichaBtn').addEventListener('click', ()=> setFichaEditable(true));
+function setFichaEditable(edit){ Array.from(document.querySelectorAll('#tab-perfil input, #tab-perfil select, #tab-perfil textarea')).forEach(i=>{ if(i.id==='f_foto') i.disabled = !edit; else i.readOnly = !edit; }); }
+function fillFichaForm(){
+  if(!currentUser) return;
+  const p = currentUser.profile || {};
+  f.grupo.value = p.grupo || '';
+  f.entrenador.value = p.entrenador || '';
+  f.peso.value = p.peso || '';
+  f.talla.value = p.talla || '';
+  f.sangre.value = p.sangre || '';
+  f.eps.value = p.eps || '';
+  f.contacto.value = p.contacto || '';
+  f.documento.value = p.documento || '';
+  f.barrio.value = p.barrio || '';
+  f.nacimiento.value = p.nacimiento || '';
+  if(p.fotoDataUrl){ f.photoPreview.innerHTML = `<img src="${p.fotoDataUrl}">`; sidePhotoPreview.innerHTML = `<img src="${p.fotoDataUrl}">`; }
+  else { f.photoPreview.innerHTML = '<span class="small muted">Sin imagen</span>'; sidePhotoPreview.innerHTML = '<span class="small muted">ID</span>'; }
+  setFichaEditable(false);
+  document.getElementById('eliminarCuenta').style.display = (currentRole==='athlete')? 'inline-flex':'none';
 }
-
-// ===== Perfil =====
-function renderPerfil(){
-  const div=document.getElementById('perfilBody');
-  div.innerHTML=`<h3>Rol: ${currentRole}</h3><p>Nombre: ${currentUser.name}</p>`;
-}
-
-// ===== Tiempos =====
-const addTimeBtn=document.getElementById('addTime');
-addTimeBtn.onclick=()=>{
-  const dist=document.getElementById('distInput').value.trim();
-  const time=document.getElementById('timeInput').value.trim();
-  if(!dist||!time){alert('Complete distancia y tiempo'); return;}
-  currentUser.times.push({dist,time,date:new Date().toLocaleString()});
+f.foto.addEventListener('change', e=>{
+  const file = e.target.files[0]; if(!file) return;
+  if(!file.type.startsWith('image/')){ alert('Solo imágenes permitidas'); return; }
+  const r = new FileReader(); r.onload = ev => f.photoPreview.innerHTML = `<img src="${ev.target.result}">`; r.readAsDataURL(file);
+});
+document.getElementById('guardarFicha').addEventListener('click', ()=>{
+  if(!currentUser){ alert('Inicia sesión'); return; }
+  let foto = currentUser.profile?.fotoDataUrl || '';
+  const img = f.photoPreview.querySelector('img'); if(img) foto = img.src;
+  currentUser.profile = {
+    grupo: f.grupo.value.trim(),
+    entrenador: f.entrenador.value,
+    peso: f.peso.value,
+    talla: f.talla.value,
+    sangre: f.sangre.value,
+    eps: f.eps.value,
+    contacto: f.contacto.value,
+    documento: f.documento.value,
+    barrio: f.barrio.value,
+    fotoDataUrl: foto,
+    nacimiento: f.nacimiento.value
+  };
   saveCurrentUser();
-  renderTimes();
-};
-function renderTimes(){
-  const tbody=document.querySelector('#timesTable tbody');
-  tbody.innerHTML='';
-  if(!currentUser.times) return;
-  currentUser.times.forEach((t,i)=>{
-    const tr=document.createElement('tr');
-    tr.innerHTML=`<td>${t.dist}</td><td>${t.time}</td><td>${t.date}</td><td><button class="btn ghost" onclick="deleteTime(${i})">Eliminar</button></td>`;
+  setFichaEditable(false);
+  sidePhotoPreview.innerHTML = foto? `<img src="${foto}">` : '<span class="small muted">ID</span>';
+  document.getElementById('sideDocName').textContent = currentUser.profile.documento || '-';
+  populateTrainerOptions();
+  renderAdminUsersTable();
+  alert('Ficha guardada');
+});
+document.getElementById('eliminarCuenta').addEventListener('click', ()=>{
+  if(!confirm('Eliminar cuenta?')) return;
+  const arr = (currentRole==='athlete')?athletes:(currentRole==='trainer')?trainers:admins;
+  const idx = arr.findIndex(u=>u.name===currentUser.name);
+  if(idx>-1){ arr.splice(idx,1); save(currentRole, arr); reloadArrays(); alert('Cuenta eliminada'); logoutBtn.click(); }
+});
+
+/* ---------- Payment management ---------- */
+function renderPaymentState(){
+  if(!currentUser) return;
+  const state = currentUser.payments?.state || 'pending';
+  const payStatus = document.getElementById('payState');
+  payStatus.value = state;
+  document.getElementById('pseEnabled').checked = !!currentUser.payments?.pse;
+  document.getElementById('payLink').value = currentUser.payments?.payLink || '';
+}
+document.getElementById('savePayment').addEventListener('click', ()=>{
+  if(!currentUser){ alert('Inicia sesión'); return; }
+  const state = document.getElementById('payState').value;
+  const concept = document.getElementById('payConcept').value.trim() || 'Pago';
+  const amount = parseFloat(document.getElementById('payAmount').value || '0');
+  const date = document.getElementById('payDate').value || new Date().toISOString().split('T')[0];
+  const file = document.getElementById('payReceipt').files[0];
+  function persist(rec){
+    currentUser.payments = currentUser.payments || {state:'pending',pse:false,receipts:[],banks:[],payLink:''};
+    currentUser.payments.state = state;
+    if(rec) currentUser.payments.receipts.push(rec);
+    saveCurrentUser(); renderPayments(); alert('Pago registrado');
+  }
+  if(file){
+    const r = new FileReader(); r.onload = e => persist({date,concept,amount,state,data:e.target.result});
+    r.readAsDataURL(file);
+  } else persist({date,concept,amount,state,data:null});
+});
+function renderPayments(){
+  const tbody = document.querySelector('#paymentsTable tbody'); tbody.innerHTML = '';
+  if(!currentUser || !currentUser.payments) return;
+  (currentUser.payments.receipts||[]).forEach((p,i)=>{
+    const tr = document.createElement('tr');
+    const proof = p.data ? `<a href="${p.data}" target="_blank">Ver</a>` : '-';
+    tr.innerHTML = `<td>${p.date}</td><td>${p.concept}</td><td>${p.amount?.toFixed? p.amount.toFixed(2) : p.amount}</td><td>${p.state}</td><td>${proof}</td><td><button class="btn ghost" data-i="${i}">Eliminar</button></td>`;
+    tr.querySelector('button').addEventListener('click', ()=>{ if(confirm('Eliminar?')){ currentUser.payments.receipts.splice(i,1); saveCurrentUser(); renderPayments(); }});
     tbody.appendChild(tr);
   });
 }
-window.deleteTime=(i)=>{
-  currentUser.times.splice(i,1);
-  saveCurrentUser();
-  renderTimes();
-};
-function saveCurrentUser(){
-  let arr;
-  if(currentRole==='athlete') arr=athletes;
-  else if(currentRole==='trainer') arr=trainers;
-  else arr=admins;
-  const idx=arr.findIndex(u=>u.name===currentUser.name);
-  if(idx>-1){arr[idx]=currentUser;}
-  localStorage.setItem(currentRole+'s', JSON.stringify(arr));
+document.getElementById('addBank').addEventListener('click', ()=>{
+  if(!currentUser){ alert('Inicia sesión'); return; }
+  const bank = document.getElementById('bankName').value.trim();
+  const num = document.getElementById('bankNumber').value.trim();
+  const type = document.getElementById('bankType').value;
+  if(!bank || !num){ alert('Completa banco y número'); return; }
+  currentUser.payments = currentUser.payments || {state:'pending',pse:false,receipts:[],banks:[],payLink:''};
+  currentUser.payments.banks.push({bank,num,type});
+  saveCurrentUser(); renderBanks();
+  document.getElementById('bankName').value=''; document.getElementById('bankNumber').value='';
+});
+function renderBanks(){
+  const tbody = document.querySelector('#banksTable tbody'); tbody.innerHTML='';
+  (currentUser?.payments?.banks || []).forEach((b,i)=>{
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${b.bank}</td><td>${b.num}</td><td>${b.type}</td><td><button class="btn ghost" data-i="${i}">Eliminar</button></td>`;
+    tr.querySelector('button').addEventListener('click', ()=>{ if(confirm('Eliminar cuenta?')){ currentUser.payments.banks.splice(i,1); saveCurrentUser(); renderBanks(); }});
+    tbody.appendChild(tr);
+  });
 }
+document.getElementById('savePayExtras').addEventListener('click', ()=>{
+  if(!currentUser){ alert('Inicia sesión'); return; }
+  currentUser.payments = currentUser.payments || {state:'pending',pse:false,receipts:[],banks:[],payLink:''};
+  currentUser.payments.pse = !!document.getElementById('pseEnabled').checked;
+  currentUser.payments.payLink = document.getElementById('payLink').value.trim();
+  saveCurrentUser(); alert('Extras guardados');
+});
+
+/* ---------- Evolution ---------- */
+document.getElementById('addEvolution').addEventListener('click', ()=>{
+  if(!currentUser){ alert('Inicia sesión'); return; }
+  const date = document.getElementById('evDate').value || new Date().toISOString().split('T')[0];
+  const punctuality = Array.from(document.getElementById('evPunctuality').selectedOptions).map(o=>o.value);
+  const attendance = document.getElementById('evAttendance').value;
+  const mot = +document.getElementById('evMotricidad').value;
+  const tec = +document.getElementById('evTecnica').value;
+  const fis = +document.getElementById('evFis').value;
+  const men = +document.getElementById('evMental').value;
+  const notes = document.getElementById('evNotes').value.trim();
+  const comment = document.getElementById('evCommentLink').value.trim();
+  currentUser.evolution = currentUser.evolution || [];
+  currentUser.evolution.push({date, punctuality, attendance, mot, tec, fis, men, notes, comment});
+  saveCurrentUser(); renderEvolution(); alert('Evolución guardada');
+});
+function renderEvolution(){
+  const tbody = document.querySelector('#evolutionTable tbody'); tbody.innerHTML='';
+  (currentUser?.evolution || []).forEach((e,i)=>{
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${e.date}</td><td>${(e.punctuality||[]).join(', ') || '-'}</td><td>${e.attendance}</td><td>${e.mot}</td><td>${e.tec}</td><td>${e.fis}</td><td>${e.men}</td><td>${e.notes||'-'}</td><td>${e.comment||'-'}</td><td><button class="btn ghost">Eliminar</button></td>`;
+    tr.querySelector('button').addEventListener('click', ()=>{ if(confirm('Eliminar?')){ currentUser.evolution.splice(i,1); saveCurrentUser(); renderEvolution(); }});
+    tbody.appendChild(tr);
+  });
+}
+
+/* ---------- Attendance ---------- */
+document.getElementById('addAttendance').addEventListener('click', ()=>{
+  if(!currentUser){ alert('Inicia sesión'); return; }
+  const date = document.getElementById('attDate').value || new Date().toISOString().split('T')[0];
+  const status = document.getElementById('attStatus').value;
+  const notes = document.getElementById('attNotes').value.trim();
+  currentUser.attendance = currentUser.attendance || [];
+  currentUser.attendance.push({date,status,notes});
+  saveCurrentUser(); renderAttendance();
+});
+function renderAttendance(){
+  const tbody = document.querySelector('#attendanceTable tbody'); tbody.innerHTML='';
+  (currentUser?.attendance || []).forEach((a,i)=>{
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${a.date}</td><td>${a.status}</td><td>${a.notes||'-'}</td><td><button class="btn ghost">Eliminar</button></td>`;
+    tr.querySelector('button').addEventListener('click', ()=>{ currentUser.attendance.splice(i,1); saveCurrentUser(); renderAttendance(); });
+    tbody.appendChild(tr);
+  });
+}
+
+/* ---------- Template areas ---------- */
+document.getElementById('addTemplateRow').addEventListener('click', ()=>{
+  if(!currentUser){ alert('Inicia sesión'); return; }
+  const date = document.getElementById('plDate').value || new Date().toISOString().split('T')[0];
+  const mot = +document.getElementById('plMot').value;
+  const tec = +document.getElementById('plTec').value;
+  const fis = +document.getElementById('plFis').value;
+  const men = +document.getElementById('plMen').value;
+  const avg = ((mot+tec+fis+men)/4).toFixed(1);
+  currentUser.template = currentUser.template || [];
+  currentUser.template.push({date,mot,tec,fis,men,avg});
+  saveCurrentUser(); renderTemplate();
+});
+function renderTemplate(){
+  const tbody = document.querySelector('#templateTable tbody'); tbody.innerHTML='';
+  (currentUser?.template || []).forEach((t,i)=>{
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${t.date}</td><td>${t.mot}</td><td>${t.tec}</td><td>${t.fis}</td><td>${t.men}</td><td>${t.avg}</td><td><button class="btn ghost">Eliminar</button></td>`;
+    tr.querySelector('button').addEventListener('click', ()=>{ currentUser.template.splice(i,1); saveCurrentUser(); renderTemplate(); });
+    tbody.appendChild(tr);
+  });
+}
+
+/* ---------- Social ---------- */
+document.getElementById('saveSocial').addEventListener('click', ()=>{
+  if(!currentUser){ alert('Inicia sesión'); return; }
+  currentUser.social = { ig:document.getElementById('rs_ig').value.trim(), fb:document.getElementById('rs_fb').value.trim(), tt:document.getElementById('rs_tt').value.trim(), yt:document.getElementById('rs_yt').value.trim() };
+  saveCurrentUser(); renderSocial(); alert('Redes guardadas');
+});
+function renderSocial(){
+  if(!currentUser) return;
+  document.getElementById('rs_ig').value = currentUser.social?.ig || '';
+  document.getElementById('rs_fb').value = currentUser.social?.fb || '';
+  document.getElementById('rs_tt').value = currentUser.social?.tt || '';
+  document.getElementById('rs_yt').value = currentUser.social?.yt || '';
+  const area = document.getElementById('socialLinks'); area.innerHTML = '';
+  [['Instagram',currentUser.social?.ig],['Facebook',currentUser.social?.fb],['TikTok',currentUser.social?.tt],['YouTube',currentUser.social?.yt]].forEach(([name,url])=>{
+    if(url){ const a = document.createElement('a'); a.href = url; a.target='_blank'; a.textContent = name; a.className='btn ghost'; area.appendChild(a); }
+  });
+}
+
+/* ---------- Schedule ---------- */
+document.getElementById('addSchedule').addEventListener('click', ()=>{
+  if(!currentUser){ alert('Inicia sesión'); return; }
+  const day = document.getElementById('schDay').value;
+  const time = document.getElementById('schTime').value.trim();
+  const place = document.getElementById('schPlace').value.trim();
+  if(!time || !place){ alert('Completa hora y lugar'); return; }
+  currentUser.schedule = currentUser.schedule || [];
+  currentUser.schedule.push({day,time,place});
+  saveCurrentUser(); renderSchedule();
+});
+function renderSchedule(){
+  const tbody = document.querySelector('#scheduleTable tbody'); tbody.innerHTML='';
+  (currentUser?.schedule || []).forEach((s,i)=>{
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${s.day}</td><td>${s.time}</td><td>${s.place}</td><td><button class="btn ghost">Eliminar</button></td>`;
+    tr.querySelector('button').addEventListener('click', ()=>{ currentUser.schedule.splice(i,1); saveCurrentUser(); renderSchedule(); });
+    tbody.appendChild(tr);
+  });
+}
+
+/* ---------- Results ---------- */
+document.getElementById('addResult').addEventListener('click', ()=>{
+  if(!currentUser){ alert('Inicia sesión'); return; }
+  const comp = document.getElementById('resComp').value.trim();
+  const cat = document.getElementById('resCat').value.trim();
+  const test = document.getElementById('resTest').value.trim();
+  const pos = +document.getElementById('resPos').value || null;
+  const mark = document.getElementById('resMark').value.trim();
+  if(!comp || !test){ alert('Completa competencia y prueba'); return; }
+  currentUser.results = currentUser.results || [];
+  currentUser.results.push({comp,cat,test,pos,mark});
+  saveCurrentUser(); renderResults();
+});
+function renderResults(){
+  const tbody = document.querySelector('#resultsTable tbody'); tbody.innerHTML='';
+  (currentUser?.results || []).forEach((r,i)=>{
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${r.comp}</td><td>${r.cat||'-'}</td><td>${r.test}</td><td>${r.pos||'-'}</td><td>${r.mark||'-'}</td><td><button class="btn ghost">Eliminar</button></td>`;
+    tr.querySelector('button').addEventListener('click', ()=>{ currentUser.results.splice(i,1); saveCurrentUser(); renderResults(); });
+    tbody.appendChild(tr);
+  });
+}
+
+/* ---------- Blog ---------- */
+document.getElementById('addBlog').addEventListener('click', ()=>{
+  if(!currentUser){ alert('Inicia sesión'); return; }
+  const t = document.getElementById('blogTitle').value.trim();
+  const a = document.getElementById('blogAuthor').value.trim() || currentUser.name;
+  const c = document.getElementById('blogContent').value.trim();
+  if(!t || !c){ alert('Completa título y contenido'); return; }
+  const post = {id:Date.now(), title:t, author:a, content:c, date:new Date().toLocaleString()};
+  currentUser.blog = currentUser.blog || [];
+  currentUser.blog.unshift(post);
+  saveCurrentUser(); renderBlog();
+  document.getElementById('blogTitle').value=''; document.getElementById('blogContent').value='';
+});
+function renderBlog(){
+  const list = document.getElementById('blogList'); list.innerHTML='';
+  (currentUser?.blog || []).forEach(p=>{
+    const c = document.createElement('div'); c.className='card'; c.style.marginBottom='8px';
+    c.innerHTML = `<div style="font-weight:800">${p.title}</div><div class="small muted">por ${p.author} · ${p.date}</div><div style="margin-top:8px;white-space:pre-wrap">${p.content}</div>`;
+    list.appendChild(c);
+  });
+}
+
+/* ---------- Events ---------- */
+document.getElementById('addEvent').addEventListener('click', ()=>{
+  if(!currentUser){ alert('Inicia sesión'); return; }
+  const name = document.getElementById('evnName').value.trim();
+  const date = document.getElementById('evnDate').value;
+  const place = document.getElementById('evnPlace').value.trim();
+  const link = document.getElementById('evnLink').value.trim();
+  if(!name || !date){ alert('Completa nombre y fecha'); return; }
+  currentUser.events = currentUser.events || [];
+  currentUser.events.push({name,date,place,link});
+  saveCurrentUser(); renderEvents();
+});
+function renderEvents(){
+  const tbody = document.querySelector('#eventsTable tbody'); tbody.innerHTML='';
+  (currentUser?.events || []).forEach((e,i)=>{
+    const link = e.link ? `<a href="${e.link}" target="_blank">Enlace</a>` : '-';
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${e.name}</td><td>${e.date}</td><td>${e.place||'-'}</td><td>${link}</td><td><button class="btn ghost">Eliminar</button></td>`;
+    tr.querySelector('button').addEventListener('click', ()=>{ currentUser.events.splice(i,1); saveCurrentUser(); renderEvents(); });
+    tbody.appendChild(tr);
+  });
+}
+
+/* ---------- Comments ---------- */
+document.getElementById('addComment').addEventListener('click', ()=>{
+  if(!currentUser){ alert('Inicia sesión'); return; }
+  const txt = document.getElementById('commentInput').value.trim(); if(!txt) return;
+  currentUser.comments = currentUser.comments || []; currentUser.comments.push({text:txt,date:new Date().toLocaleString()});
+  saveCurrentUser(); renderComments(); document.getElementById('commentInput').value='';
+});
+function renderComments(){
+  const list = document.getElementById('commentsList'); list.innerHTML='';
+  (currentUser?.comments || []).slice().reverse().forEach(c=>{
+    const d = document.createElement('div'); d.className='card'; d.style.marginBottom='8px';
+    d.innerHTML = `<div style="font-weight:800">${currentUser.name}</div><div class="small muted">${c.date}</div><div style="margin-top:6px">${c.text}</div>`;
+    list.appendChild(d);
+  });
+}
+
+/* ---------- Admin ---------- */
+const adminFilter = document.getElementById('adminFilterRole');
+adminFilter.addEventListener('change', renderAdminUsersTable);
+function renderAdminUsersTable(){
+  const tbody = document.querySelector('#adminUsersTable tbody'); tbody.innerHTML='';
+  const filter = adminFilter.value; const rows = [];
+  if(filter==='all' || filter==='athlete') athletes.forEach(u=>rows.push({role:'Deportista', u}));
+  if(filter==='all' || filter==='trainer') trainers.forEach(u=>rows.push({role:'Entrenador', u}));
+  if(filter==='all' || filter==='admin') admins.forEach(u=>rows.push({role:'Administrativo', u}));
+  rows.forEach(r=>{
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${r.role}</td><td>${r.u.name}</td><td>${r.u.profile?.contacto||r.u.email||'-'}</td><td><button class="btn ghost" data-name="${r.u.name}" data-role="${r.role}">Editar</button> <button class="btn danger" data-del="${r.u.name}" data-role="${r.role}">Eliminar</button></td>`;
+    tr.querySelector('[data-name]').addEventListener('click', ()=>{
+      if(currentRole!=='admin'){ alert('Solo administradores pueden editar usuarios desde aquí'); return; }
+      const roleKey = (r.role==='Deportista')? 'athlete': (r.role==='Entrenador')? 'trainer':'admin';
+      const arr = roleKey==='athlete'?athletes:roleKey==='trainer'?trainers:admins;
+      const user = arr.find(x=>x.name===r.u.name); if(!user){ alert('Usuario no encontrado'); return; }
+      currentUser = user; currentRole = roleKey; afterLogin(); alert('Cambiado a usuario: ' + user.name);
+    });
+    tr.querySelector('[data-del]').addEventListener('click', ()=>{
+      if(!confirm('Eliminar usuario?')) return;
+      const roleKey = (r.role==='Deportista')? 'athlete': (r.role==='Entrenador')? 'trainer':'admin';
+      let arr = roleKey==='athlete'?athletes:roleKey==='trainer'?trainers:admins;
+      const idx = arr.findIndex(u=>u.name===r.u.name); if(idx>-1){ arr.splice(idx,1); save(roleKey,arr); reloadArrays(); renderAdminUsersTable(); alert('Eliminado'); }
+    });
+    tbody.appendChild(tr);
+  });
+}
+
+/* ---------- small helpers ---------- */
+function capitalize(s){ return s? s.charAt(0).toUpperCase()+s.slice(1):''; }
+function reloadArrays(){ athletes = load('athlete'); trainers = load('trainer'); admins = load('admin'); populateTrainerOptions(); }
+
+function populateTrainerOptions(){
+  const sel = document.getElementById('f_entrenador'); if(!sel) return;
+  const cur = sel.value;
+  sel.innerHTML = '<option value="">-- Ninguno --</option>';
+  trainers.forEach(t=>{ const o = document.createElement('option'); o.value = t.name; o.textContent = t.name; sel.appendChild(o); });
+  if(cur) sel.value = cur;
+}
+
+/* ---------- Save current user (persist) ---------- */
+function saveCurrentUser(){
+  if(!currentUser || !currentRole) return;
+  const arrKey = currentRole;
+  let arr = (arrKey==='athlete')?athletes:(arrKey==='trainer')?trainers:admins;
+  const idx = arr.findIndex(u=>u.name===currentUser.name);
+  if(idx>-1) arr[idx] = currentUser; else arr.push(currentUser);
+  save(arrKey, arr); reloadArrays();
+}
+
+/* ---------- renderers used on login ---------- */
+function renderPaymentState(){ renderPaymentState; renderPayments(); renderBanks(); }
+function renderPayments(){ renderPayments; }
+function renderBanks(){ renderBanks; }
+function renderEvolution(){ renderEvolution; }
+function renderAttendance(){ renderAttendance; }
+function renderTemplate(){ renderTemplate; }
+function renderSocial(){ renderSocial; }
+function renderSchedule(){ renderSchedule; }
+function renderResults(){ renderResults; }
+function renderBlog(){ renderBlog; }
+function renderEvents(){ renderEvents; }
+function renderComments(){ renderComments; }
+
+/* The above wrapper functions were added to avoid errors if called before login.
+   Now we replace them with actual functions (they already exist above). */
+
+/* ---------- Utility: ensure initial demo admin exists ---------- */
+(function ensureDemoAdmin(){
+  if(admins.length===0){
+    admins.push({name:'admin',email:'',pass:'admin123',role:'admin',profile:{},payments:{state:'pending',pse:false,receipts:[],banks:[],payLink:''},evolution:[],attendance:[],template:[],social:{},schedule:[],results:[],blog:[],events:[],comments:[]});
+    save('admin', admins); reloadArrays();
+  }
+})();
+
+/* ---------- quick nav buttons ---------- */
+document.getElementById('goNews').addEventListener('click', ()=> {
+  newsScreen.style.display='block'; dashboard.style.display='none';
+});
+document.getElementById('goDashboard').addEventListener('click', ()=> {
+  if(!currentUser){ alert('Inicia sesión para ver el dashboard'); return; }
+  newsScreen.style.display='none'; dashboard.style.display='block';
+});
+
+/* ---------- populate initial news and trainer options ---------- */
+renderNews();
+populateTrainerOptions();
+
+/* ---------- Render functions that might have been referenced earlier ----------
+   we ensure these functions refer to the actual definitions (no-op protection)  */
+function renderPaymentState(){ if(currentUser) { const state = currentUser.payments?.state || 'pending'; document.getElementById('payState').value = state; document.getElementById('pseEnabled').checked = !!currentUser.payments?.pse; document.getElementById('payLink').value = currentUser.payments?.payLink || ''; } renderPayments(); renderBanks(); }
+function renderPayments(){ const tbody = document.querySelector('#paymentsTable tbody'); if(!tbody){return;} tbody.innerHTML=''; if(!currentUser || !currentUser.payments) return; (currentUser.payments.receipts||[]).forEach((p,i)=>{ const tr=document.createElement('tr'); const proof = p.data? `<a href="${p.data}" target="_blank">Ver</a>` : '-'; tr.innerHTML = `<td>${p.date}</td><td>${p.concept}</td><td>${p.amount?.toFixed? p.amount.toFixed(2):p.amount}</td><td>${p.state}</td><td>${proof}</td><td><button class="btn ghost" data-i="${i}">Eliminar</button></td>`; tr.querySelector('button').addEventListener('click', ()=>{ if(confirm('Eliminar registro?')){ currentUser.payments.receipts.splice(i,1); saveCurrentUser(); renderPayments(); } }); tbody.appendChild(tr); }); }
+function renderBanks(){ const tbody=document.querySelector('#banksTable tbody'); if(!tbody) return; tbody.innerHTML=''; (currentUser?.payments?.banks||[]).forEach((b,i)=>{ const tr=document.createElement('tr'); tr.innerHTML=`<td>${b.bank}</td><td>${b.num}</td><td>${b.type}</td><td><button class="btn ghost" data-i="${i}">Eliminar</button></td>`; tr.querySelector('button').addEventListener('click', ()=>{ if(confirm('Eliminar banco?')){ currentUser.payments.banks.splice(i,1); saveCurrentUser(); renderBanks(); } }); tbody.appendChild(tr); }); }
+function renderEvolution(){ const tbody=document.querySelector('#evolutionTable tbody'); if(!tbody) return; tbody.innerHTML=''; (currentUser?.evolution||[]).forEach((e,i)=>{ const tr=document.createElement('tr'); tr.innerHTML=`<td>${e.date}</td><td>${(e.punctuality||[]).join(', ')||'-'}</td><td>${e.attendance}</td><td>${e.mot}</td><td>${e.tec}</td><td>${e.fis}</td><td>${e.men}</td><td>${e.notes||'-'}</td><td>${e.comment||'-'}</td><td><button class="btn ghost">Eliminar</button></td>`; tr.querySelector('button').addEventListener('click', ()=>{ if(confirm('Eliminar?')){ currentUser.evolution.splice(i,1); saveCurrentUser(); renderEvolution(); } }); tbody.appendChild(tr); }); }
+function renderAttendance(){ const tbody=document.querySelector('#attendanceTable tbody'); if(!tbody) return; tbody.innerHTML=''; (currentUser?.attendance||[]).forEach((a,i)=>{ const tr=document.createElement('tr'); tr.innerHTML=`<td>${a.date}</td><td>${a.status}</td><td>${a.notes||'-'}</td><td><button class="btn ghost">Eliminar</button></td>`; tr.querySelector('button').addEventListener('click', ()=>{ if(confirm('Eliminar?')){ currentUser.attendance.splice(i,1); saveCurrentUser(); renderAttendance(); } }); tbody.appendChild(tr); }); }
+function renderTemplate(){ const tbody=document.querySelector('#templateTable tbody'); if(!tbody) return; tbody.innerHTML=''; (currentUser?.template||[]).forEach((t,i)=>{ const tr=document.createElement('tr'); tr.innerHTML=`<td>${t.date}</td><td>${t.mot}</td><td>${t.tec}</td><td>${t.fis}</td><td>${t.men}</td><td>${t.avg}</td><td><button class="btn ghost">Eliminar</button></td>`; tr.querySelector('button').addEventListener('click', ()=>{ if(confirm('Eliminar?')){ currentUser.template.splice(i,1); saveCurrentUser(); renderTemplate(); } }); tbody.appendChild(tr); }); }
+function renderSocial(){ if(!currentUser) return; document.getElementById('rs_ig').value = currentUser.social?.ig || ''; document.getElementById('rs_fb').value = currentUser.social?.fb || ''; document.getElementById('rs_tt').value = currentUser.social?.tt || ''; document.getElementById('rs_yt').value = currentUser.social?.yt || ''; const area=document.getElementById('socialLinks'); area.innerHTML=''; [['Instagram',currentUser.social?.ig],['Facebook',currentUser.social?.fb],['TikTok',currentUser.social?.tt],['YouTube',currentUser.social?.yt]].forEach(([n,u])=>{ if(u){ const a=document.createElement('a'); a.href=u; a.target='_blank'; a.textContent=n; a.className='btn ghost'; area.appendChild(a); } }); }
+function renderSchedule(){ const tbody=document.querySelector('#scheduleTable tbody'); if(!tbody) return; tbody.innerHTML=''; (currentUser?.schedule||[]).forEach((s,i)=>{ const tr=document.createElement('tr'); tr.innerHTML=`<td>${s.day}</td><td>${s.time}</td><td>${s.place}</td><td><button class="btn ghost">Eliminar</button></td>`; tr.querySelector('button').addEventListener('click', ()=>{ if(confirm('Eliminar?')){ currentUser.schedule.splice(i,1); saveCurrentUser(); renderSchedule(); } }); tbody.appendChild(tr); }); }
+function renderResults(){ const tbody=document.querySelector('#resultsTable tbody'); if(!tbody) return; tbody.innerHTML=''; (currentUser?.results||[]).forEach((r,i)=>{ const tr=document.createElement('tr'); tr.innerHTML=`<td>${r.comp}</td><td>${r.cat||'-'}</td><td>${r.test}</td><td>${r.pos||'-'}</td><td>${r.mark||'-'}</td><td><button class="btn ghost">Eliminar</button></td>`; tr.querySelector('button').addEventListener('click', ()=>{ if(confirm('Eliminar?')){ currentUser.results.splice(i,1); saveCurrentUser(); renderResults(); } }); tbody.appendChild(tr); }); }
+function renderBlog(){ const list=document.getElementById('blogList'); if(!list) return; list.innerHTML=''; (currentUser?.blog||[]).forEach(p=>{ const c=document.createElement('div'); c.className='card'; c.style.marginBottom='8px'; c.innerHTML=`<div style="font-weight:800">${p.title}</div><div class="small muted">por ${p.author} · ${p.date}</div><div style="margin-top:8px">${p.content}</div>`; list.appendChild(c); }); }
+function renderEvents(){ const tbody=document.querySelector('#eventsTable tbody'); if(!tbody) return; tbody.innerHTML=''; (currentUser?.events||[]).forEach((e,i)=>{ const link = e.link? `<a href="${e.link}" target="_blank">Ver</a>` : '-'; const tr=document.createElement('tr'); tr.innerHTML=`<td>${e.name}</td><td>${e.date}</td><td>${e.place||'-'}</td><td>${link}</td><td><button class="btn ghost">Eliminar</button></td>`; tr.querySelector('button').addEventListener('click', ()=>{ if(confirm('Eliminar?')){ currentUser.events.splice(i,1); saveCurrentUser(); renderEvents(); } }); tbody.appendChild(tr); }); }
+function renderComments(){ const list=document.getElementById('commentsList'); if(!list) return; list.innerHTML=''; (currentUser?.comments||[]).slice().reverse().forEach(c=>{ const d=document.createElement('div'); d.className='card'; d.style.marginBottom='8px'; d.innerHTML = `<div style="font-weight:800">${currentUser.name}</div><div class="small muted">${c.date}</div><div style="margin-top:6px">${c.text}</div>`; list.appendChild(d); }); }
+
+/* ---------- helper: save & reload ---------- */
+function saveCurrentUser(){ if(!currentUser || !currentRole) return; let arr = (currentRole==='athlete')?athletes:(currentRole==='trainer')?trainers:admins; const idx = arr.findIndex(u=>u.name===currentUser.name); if(idx>-1) arr[idx]=currentUser; else arr.push(currentUser); save(currentRole, arr); reloadArrays(); }
+
+/* ---------- ensure UI consistency on load ---------- */
+document.addEventListener('DOMContentLoaded', ()=>{
+  // ensure news and trainer list shown
+  renderNews(); populateTrainerOptions();
+  // ensure admin exists was created above
+});
+
+/* ---------- small: keyboard Enter submission for login/register ---------- */
+document.getElementById('registerForm').addEventListener('submit', (e)=>{ e.preventDefault(); document.getElementById('submitReg').click(); });
+document.getElementById('loginForm').addEventListener('submit', (e)=>{ e.preventDefault(); document.getElementById('submitLogin').click(); });
 
 </script>
 </body>
 </html>
+
+
