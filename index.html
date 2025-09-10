@@ -26,18 +26,20 @@
     }
 
     .device{
-      width:100%;
-      max-width:420px;
-      height:calc(100vh - 40px);
-      background:linear-gradient(180deg, #ffffff 0%, #fbfbfb 100%);
-      border-radius:28px;
-      box-shadow: 0 18px 40px rgba(10,10,10,0.12), 0 6px 12px rgba(10,10,10,0.06);
-      overflow:hidden;
-      position:relative;
-      display:flex;
-      flex-direction:column;
-      border: 1px solid rgba(0,0,0,0.04);
-    }
+  width:100%;
+  max-width: 480px; /* hasta aquí en móviles */
+  height: auto;
+  min-height: calc(100vh - 40px);
+  background:linear-gradient(180deg, #ffffff 0%, #fbfbfb 100%);
+  border-radius:28px;
+  box-shadow: 0 18px 40px rgba(10,10,10,0.12), 0 6px 12px rgba(10,10,10,0.06);
+  overflow:hidden;
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  border: 1px solid rgba(0,0,0,0.04);
+  margin:auto; /* centra en pantallas grandes */
+}
 
     /* Marca de agua alusiva al patinaje */
     .device::before{
@@ -104,6 +106,37 @@
     .bottom-nav button.active{ color:var(--verde); }
 
     .oculto{ display:none; }
+    /* Celulares pequeños (hasta 600px) */
+@media (max-width: 600px) {
+  .appbar h1 { font-size: 22px; }
+  .appbar p { font-size: 14px; }
+  .card { padding: 12px; }
+}
+
+/* Tablets (601px a 1024px) */
+@media (min-width: 601px) and (max-width: 1024px) {
+  .device {
+    max-width: 700px; /* se expande más en tablet */
+  }
+  h2 { font-size: 1.3rem; }
+  .appbar h1 { font-size: 26px; }
+}
+
+/* PC o pantallas grandes (más de 1024px) */
+@media (min-width: 1025px) {
+  .device {
+    max-width: 900px; /* ocupa más espacio en escritorio */
+    border-radius: 18px;
+  }
+  .content {
+    padding: 40px; /* más aire en PC */
+  }
+  .bottom-nav {
+    justify-content: center;
+    gap: 40px;
+  }
+}
+
   </style>
 </head>
 <body>
